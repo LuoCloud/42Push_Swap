@@ -6,7 +6,7 @@
 /*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 00:19:55 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/09/24 03:08:40 by cchien-s         ###   ########.fr       */
+/*   Updated: 2026/09/24 03:12:45 by cchien-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,12 +174,14 @@ void	ra(t_node **stack_a)
 {
 	rotate(stack_a);
 	write(1, "ra\n", 3);
+	return ;
 }
 
 void	rb(t_node **stack_b)
 {
 	rotate(stack_b);
 	write(1, "rb\n", 3);
+	return ;
 }
 
 void	rr(t_node **stack_a, t_node **stack_b)
@@ -187,6 +189,7 @@ void	rr(t_node **stack_a, t_node **stack_b)
 	rotate(stack_a);
 	rotate(stack_b);
 	write(1, "rr\n", 3);
+	return ;
 }
 
 void	reverserotate(t_node **stack)
