@@ -6,7 +6,7 @@
 /*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 00:19:55 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/09/23 14:01:00 by wli-ting         ###   ########.fr       */
+/*   Updated: 2026/09/23 14:43:41 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,25 @@ void	index_creator(t_node *stack)
 			i++;
 		}
 		current = current->next;
+	}
+}
+
+void	index_num(t_stack *stack)
+{
+	t_stack	*temp;
+	t_stack	*start;
+
+	start = stack;
+	while (stack)
+	{
+		temp = start;
+		while (temp)
+		{
+			if (stack->value > temp->value)
+				++stack->index;
+			temp = temp->next;
+		}
+		stack = stack->next;
 	}
 }
 
