@@ -6,7 +6,7 @@
 /*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 00:19:55 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/09/24 03:12:45 by cchien-s         ###   ########.fr       */
+/*   Updated: 2026/09/30 02:40:19 by cchien-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ void	ra(t_node **stack_a)
 {
 	rotate(stack_a);
 	write(1, "ra\n", 3);
-	return ;
+	return ;	
 }
 
 void	rb(t_node **stack_b)
@@ -300,7 +300,58 @@ void	pb(t_node **stack_a, t_node **stack_b)
 	return ;
 }
 
-void	index_creator(t_node *stack)
+int	bit_counterf (t_node **stack_a)
+{
+	t_node	*current;
+	t_node	*last;
+
+	current = *stack_a;
+	while (current->next != NULL)
+	{
+		last = current->next;
+		if (current->index > last)
+			
+	}
+}
+
+void	complex(t_node **stack_a, t_node **stack_b)
+{
+	t_node	*current;
+	unsigned int	nonodes;
+	int	size;
+	int	bit_increment;
+	int	bit_counter;
+
+	size = 0;
+	bit_increment = 0;
+	nonodes = ft_lstsize (&stack_a);
+	bit_counter = bit_counterf ($stack_a);
+	current = *stack_a;
+	while (current->next != NULL)
+	{
+		while (size < nonodes)
+		{
+			current = *stack_a;
+			if (((current->index >> bit_increment) & 1)== 1)
+				ra(&stack_a);
+			else
+				pb (&stack_a, &stack_b);
+			size++;
+		}
+		current = current->next;
+		bit_increment++;
+	}
+}
+
+void	assigner(t_node **stack_a, float j)
+{
+	t_node	*stack_b = NULL;
+
+	if (j >= 0.5)
+		complex(&stack_a, &stack_b);
+}
+
+void	index_creator(t_node *stack, float	j)
 {
 	t_node	*temp;
 	t_node	*start;
@@ -317,7 +368,7 @@ void	index_creator(t_node *stack)
 		}
 		stack = stack->next;
 	}
-	sa(&stack);
+	assigner(&stack, j);
 	return ;
 }
 
@@ -378,7 +429,7 @@ void	error_checker(int argc, char **argv)
 	}//checks if the inputs are already sorted.
 	//here u can then pass to the algo part.
 	j = disorder_calculator(stack_a);
-	index_creator(stack_a);
+	index_creator(stack_a, j);
 	//printf("%f\n", j);
 	/*current = stack_a;
 	while (current != NULL)
