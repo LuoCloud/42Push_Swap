@@ -6,7 +6,7 @@
 /*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 00:19:55 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/09/30 02:40:19 by cchien-s         ###   ########.fr       */
+/*   Updated: 2026/10/01 03:37:42 by cchien-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@ int	num_checker2(t_node **ans)
 	while (lst->next != NULL)
 	{
 		lst2 = lst->next;
-		if (lst->value == lst2->value)
-			return (1);
+		while (lst2 != NULL)
+		{
+			if (lst->value == lst2->value)
+				return (1);
+			lst2 = lst2->next;
+		}
 		lst = lst->next;
 	}
 	return (0);
@@ -240,9 +244,9 @@ void	swap(t_node **stack)
 		return ;
 	first = *stack;
 	second = first->next;
-	first = second->next;
+	first->next = second->next;
 	second->next = first;
-	second = *stack;
+	*stack = second;
 	/*while (*stack != NULL)
 	{
 		printf("%d\n", (*stack)->value);
@@ -277,7 +281,7 @@ void	push(t_node **src, t_node **dest)
 {
 	t_node	*temp;
 
-	if (!src || !*src || !(*src)->next)
+	if (!src || !*src)
 		return ;
 	temp = *src;
 	*src = (*src)->next;
@@ -300,75 +304,103 @@ void	pb(t_node **stack_a, t_node **stack_b)
 	return ;
 }
 
-int	bit_counterf (t_node **stack_a)
+unsigned int	bit_counterf (t_node **stack_a)
 {
 	t_node	*current;
-	t_node	*last;
+	unsigned int count;
+	int	max_index;
 
+	if (!stack_a || !*stack_a || !(*stack_a)->next)
+		return (0);
 	current = *stack_a;
-	while (current->next != NULL)
+	count = 0;
+	max_index = 0;
+	while (current != NULL)
 	{
-		last = current->next;
-		if (current->index > last)
-			
+		if (current->index > max_index)
+			max_index = current->index;
+		current = current->next;
 	}
+	while ((max_index >> count) != 0)
+		count++;
+	return (count);
+}
+
+unsigned int	ft_lstsize2(t_node *lst)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (lst != NULL)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }
 
 void	complex(t_node **stack_a, t_node **stack_b)
 {
 	t_node	*current;
 	unsigned int	nonodes;
-	int	size;
-	int	bit_increment;
-	int	bit_counter;
+	unsigned int	size;
+	unsigned int	bit_increment;
+	unsigned int	noofbits;
 
-	size = 0;
 	bit_increment = 0;
-	nonodes = ft_lstsize (&stack_a);
-	bit_counter = bit_counterf ($stack_a);
-	current = *stack_a;
-	while (current->next != NULL)
+	nonodes = ft_lstsize2(*stack_a);
+	noofbits = bit_counterf(stack_a);
+	while (bit_increment < noofbits)
 	{
+		size = 0;
+		if (is_sorted (*stack_a) == 0)
+			break ;
 		while (size < nonodes)
 		{
 			current = *stack_a;
 			if (((current->index >> bit_increment) & 1)== 1)
-				ra(&stack_a);
+				ra(stack_a);
 			else
-				pb (&stack_a, &stack_b);
+				pb (stack_a, stack_b);
 			size++;
 		}
-		current = current->next;
+		while (*stack_b != NULL)
+			pa (stack_a, stack_b);
 		bit_increment++;
 	}
+	return ;
 }
 
 void	assigner(t_node **stack_a, float j)
 {
 	t_node	*stack_b = NULL;
-
-	if (j >= 0.5)
-		complex(&stack_a, &stack_b);
+	j = 0;
+	//if (j >= 0.5)
+	complex(stack_a, &stack_b);
 }
 
-void	index_creator(t_node *stack, float	j)
+void	index_creator(t_node **stack, float	j)
 {
 	t_node	*temp;
+	t_node	*current;
 	t_node	*start;
 
-	start = stack;
-	while (stack)
+	if (!stack || !(*stack)->next || j == 0.0)
+		return ;
+	start = *stack;
+	current = *stack;
+	while (current)
 	{
 		temp = start;
 		while (temp)
 		{
-			if (stack->value > temp->value)
-				++stack->index;
+			if (current->value > temp->value)
+				++current->index;
 			temp = temp->next;
 		}
-		stack = stack->next;
+		current = current->next;
 	}
-	assigner(&stack, j);
+	assigner(stack, j);
 	return ;
 }
 
@@ -425,11 +457,11 @@ void	error_checker(int argc, char **argv)
 	{
 		freesplit(ans);
 		freestack(&stack_a);
-		exit (1);
+		exit (0);
 	}//checks if the inputs are already sorted.
 	//here u can then pass to the algo part.
 	j = disorder_calculator(stack_a);
-	index_creator(stack_a, j);
+	index_creator(&stack_a, j);
 	//printf("%f\n", j);
 	/*current = stack_a;
 	while (current != NULL)
