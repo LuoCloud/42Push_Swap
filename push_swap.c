@@ -6,7 +6,7 @@
 /*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 00:19:55 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/09/23 14:43:41 by wli-ting         ###   ########.fr       */
+/*   Updated: 2026/10/02 01:11:19 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,14 @@ void	add_node_back(t_node **stack, t_node *new_node)
 	last->next = new_node;
 }
 
-void	freestack(t_node **stack_a)
+void	freestack(t_node **stacka)
 {
 	t_node	*current;
 	t_node	*temp;	
 
-	if (!stacka || !*stack_a)
+	if (!stacka || !*stacka)
 		return ;
-	current = *stack_a;
+	current = *stacka;
 	while (current != NULL)
 	{
 		temp = current->next;
@@ -153,30 +153,236 @@ float	disorder_calculator(t_node *stack)
 	return (mistakes/pairs);
 }
 
-void	index_creator(t_node *stack)
+void	rotate(t_node **stack)
+{
+	t_node	*first;
+	t_node	*last;
+
+	if (!stack || !*stack || !(*stack)->next)
+		return ;
+	first = *stack;
+	last = *stack;
+	while (last->next != NULL)
+		last = last->next;
+	*stack = first->next;
+	last->next = first;
+	first->next = NULL;
+	return ;
+}
+
+void	ra(t_node **stack_a)
+{
+	rotate(stack_a);
+	write(1, "ra\n", 3);
+	return ;	
+}
+
+void	rb(t_node **stack_b)
+{
+	rotate(stack_b);
+	write(1, "rb\n", 3);
+	return ;
+}
+
+void	rr(t_node **stack_a, t_node **stack_b)
+{
+	rotate(stack_a);
+	rotate(stack_b);
+	write(1, "rr\n", 3);
+	return ;
+}
+
+void	reverserotate(t_node **stack)
+{
+	t_node	*second_last;
+	t_node	*last;
+
+	if (!stack || !*stack || !(*stack)->next)
+		return ;
+	second_last = *stack;
+	while (second_last->next->next != NULL)
+		second_last = second_last->next;
+	last = second_last->next;
+	last->next = *stack;
+	*stack = last;
+	second_last->next = NULL;
+	return ;
+}
+
+void	rra(t_node **stack_a)
+{
+	reverserotate(stack_a);
+	write(1, "rra\n", 4);
+	return ;
+}
+
+void	rrb(t_node **stack_b)
+{
+	reverserotate(stack_b);
+	write(1, "rrb\n", 4);
+	return ;
+}
+
+void	rrr(t_node **stack_a, t_node **stack_b)
+{
+	reverserotate(stack_a);
+	reverserotate(stack_b);
+	write(1, "rrr\n", 4);
+	return ;
+}
+
+void	swap(t_node **stack)
+{
+	t_node	*first;
+	t_node	*second;
+
+	if(!stack || !*stack || !(*stack)->next)
+		return ;
+	first = *stack;
+	second = first->next;
+	first = second->next;
+	second->next = first;
+	second = *stack;
+	/*while (*stack != NULL)
+	{
+		printf("%d\n", (*stack)->value);
+		*stack = (*stack)->next;
+	}*/
+	return ;
+}
+
+void	sa(t_node **stack_a)
+{
+	swap(stack_a);
+	write(1, "sa\n", 3);
+	return ;
+}
+
+void	sb(t_node **stack_b)
+{
+	swap(stack_b);
+	write(1, "sb\n", 3);
+	return ;
+}
+
+void	ss(t_node **stack_a, t_node **stack_b)
+{
+	swap(stack_a);
+	swap(stack_b);
+	write(1, "ss\n", 3);
+	return ;
+}
+
+void	push(t_node **src, t_node **dest)
+{
+	t_node	*temp;
+
+	if (!src || !*src || !(*src)->next)
+		return ;
+	temp = *src;
+	*src = (*src)->next;
+	temp->next = *dest;
+	*dest = temp;
+	return ;
+}
+
+void	pa(t_node **stack_a, t_node **stack_b)
+{
+	push(stack_b, stack_a);
+	write(1, "pa\n", 3);
+	return ;
+}
+
+void	pb(t_node **stack_a, t_node **stack_b)
+{
+	push(stack_a, stack_b);
+	write(1, "pb\n", 3);
+	return ;
+}
+
+unsigned int	bit_counterf (t_node **stack_a)
 {
 	t_node	*current;
+	unsigned int count;
+	int	max_index;
+
+	if (!stack_a || !*stack_a || !(*stack_a)->next)
+		return (0);
+	current = *stack_a;
+	count = 0;
+	max_index = 0;
+	while (current != NULL)
+	{
+		if (current->index > max_index)
+			max_index = current->index;
+		current = current->next;
+	}
+	while ((max_index >> count) != 0)
+		count++;
+	return (count);
+}
+
+unsigned int	ft_lstsize2(t_node *lst)
+{
 	unsigned int	i;
 
 	i = 0;
-	if(!stack)
-		return ;
-	current = stack;
+	while (lst != NULL)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+}
+
+void	complex(t_node **stack_a, t_node **stack_b)
+{
+	t_node	*current;
+	unsigned int	nonodes;
+	int	size;
+	int	bit_increment;
+	int	bit_counter;
+
+	size = 0;
+	bit_increment = 0;
+	nonodes = ft_lstsize (&stack_a);
+	bit_counter = bit_counterf (&stack_a);
+	current = *stack_a;
 	while (current->next != NULL)
 	{
-		if (current->value < current->next->value)
+		while (size < nonodes)
 		{
-			stack->index = i;
-			i++;
+			current = *stack_a;
+			if (((current->index >> bit_increment) & 1)== 1)
+				ra(&stack_a);
+			else
+				pb (&stack_a, &stack_b);
+			size++;
 		}
 		current = current->next;
+		bit_increment++;
 	}
 }
 
-void	index_num(t_stack *stack)
+void	assigner(t_node **stack_a, float j)
 {
-	t_stack	*temp;
-	t_stack	*start;
+	t_node	*stack_b;
+	int		size;
+
+	stack_b = NULL;
+	size = ft_lstsize2(*stack_a);
+	if (size <= 5)
+		limit_five(stack_a, size);
+	else if (j < 0.5)
+		simple(stack_a, &stack_b);
+	else if (j >= 0.5)
+		complex(&stack_a, &stack_b);
+}
+
+void	index_creator(t_node *stack, float	j)
+{
+	t_node	*temp;
+	t_node	*start;
 
 	start = stack;
 	while (stack)
@@ -190,6 +396,8 @@ void	index_num(t_stack *stack)
 		}
 		stack = stack->next;
 	}
+	assigner(&stack, j);
+	return ;
 }
 
 void	error_checker(int argc, char **argv)
@@ -249,7 +457,7 @@ void	error_checker(int argc, char **argv)
 	}//checks if the inputs are already sorted.
 	//here u can then pass to the algo part.
 	j = disorder_calculator(stack_a);
-	index_creator(stack_a);
+	index_creator(stack_a, j);
 	//printf("%f\n", j);
 	/*current = stack_a;
 	while (current != NULL)
