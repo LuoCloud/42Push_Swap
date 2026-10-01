@@ -81,21 +81,21 @@ void	add_node_back(t_node **stack, t_node *new_node)
 	last->next = new_node;
 }
 
-void	freestack(t_node **stacka)
+void	freestack(t_node **stack_a)
 {
 	t_node	*current;
 	t_node	*temp;	
 
-	if (!stacka || !*stacka)
+	if (!stack_a || !*stack_a)
 		return ;
-	current = *stacka;
+	current = *stack_a;
 	while (current != NULL)
 	{
 		temp = current->next;
 		free(current);
 		current = temp;
 	}
-	*stacka = NULL;
+	*stack_a = NULL;
 }
 
 void	freesplit(char **str_array)
