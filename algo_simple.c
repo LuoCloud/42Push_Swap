@@ -1,0 +1,64 @@
+#include "push_swap.h"
+#include <stdio.h>
+
+int find_min(t_node *list, int size)
+{
+    int min;
+    int index;
+    int i;
+
+    min = list->index;
+    i = 0;
+    index = 0;
+    while (i < size)
+    {
+        if (list->index < min)
+        {
+            min = list->index;
+            index = i;
+        }
+        list = list->next;
+        i++;
+    }
+    return (index);
+}
+
+void move_to_top(t_node **stack_a, int pos, int size)
+{
+    int i;
+
+    i = 0;
+    if (pos <= size / 2)
+    {
+        while (i < pos)
+        {
+            ra(stack_a);
+            i++;
+        }
+    }
+    else
+    {
+        while (i < size - pos)
+        {
+            rra(stack_a);
+            i++;
+        }   
+    }
+}
+
+void    simple(t_node **stack_a, t_node **stack_b)
+{
+    int pos;
+    int size;
+
+    size = ft_lstsize2(*stack_a);
+    while (size > 0)
+    {
+        pos = find_min(*stack_a, size);
+        move_to_top(stack_a, pos, size);
+        pb(stack_a, stack_b);
+        size--;
+    }
+    while (*stack_b != NULL)
+        pa(stack_a, stack_b);
+}
