@@ -6,7 +6,7 @@
 /*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 00:19:55 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/10/01 03:37:42 by cchien-s         ###   ########.fr       */
+/*   Updated: 2026/10/03 02:38:08 by cchien-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -371,15 +371,34 @@ void	complex(t_node **stack_a, t_node **stack_b)
 	return ;
 }
 
-void	assigner(t_node **stack_a, float j)
+void	assigner(t_node **stack_a, float j, int mode)
 {
-	t_node	*stack_b = NULL;
-	j = 0;
-	//if (j >= 0.5)
-	complex(stack_a, &stack_b);
+	t_node	*stack_b;
+	int		size;
+
+	stack_b = NULL;
+	size = ft_lstsize2(*stack_a);
+	if (mode >= 1 && mode <= 3)
+	{
+		if (mode == 1)
+			simple(stack_a, &stack_b);
+		/*else if (mode == 2)
+			medium(stack_a, &stack_b);*/
+		else if (mode == 3)
+			complex(stack_a, &stack_b);
+		return ;
+	}
+	if (size <= 5)
+		limit_five(stack_a, size);
+	else if (j < 0.2)
+		simple(stack_a, &stack_b);
+	/*else if (j >= 0.2 && j < 0.5)
+		medium(stack_a, &stack_b);*/
+	else if (j >= 0.5)
+		complex(stack_a, &stack_b);
 }
 
-void	index_creator(t_node **stack, float	j)
+void	index_creator(t_node **stack, float	j, int mode)
 {
 	t_node	*temp;
 	t_node	*current;
@@ -400,7 +419,7 @@ void	index_creator(t_node **stack, float	j)
 		}
 		current = current->next;
 	}
-	assigner(stack, j);
+	assigner(stack, j, mode);
 	return ;
 }
 
@@ -415,10 +434,12 @@ void	error_checker(int argc, char **argv)
 	t_node	*new_node;
 	t_node	*stack_a = NULL;
 	float	j;
+	int	mode;
 	//t_node	*current;
 
 	i = 1;
 	k = 0;
+	mode = 0;
 	strjoin = ft_strdup("");
 	if (argv == NULL)
 		return ;
@@ -433,6 +454,25 @@ void	error_checker(int argc, char **argv)
 	}//joins the inputs into one string
 	ans = ft_split(strjoin, ' ');//split it into a 2D array.
 	free (strjoin);
+	if (ans[0] != NULL && ans[0][0] == '-' && ans[0][1] == '-')
+	{
+		if (ft_strncmp(ans[0], "--simple", 9) == 0)
+			mode = 1;
+		else if (ft_strncmp(ans[0], "--medium", 9) == 0)
+			mode = 2;
+		else if (ft_strncmp(ans[0], "--complex", 10) == 0)
+			mode = 3;
+		else if (ft_strncmp(ans[0], "--adaptive", 11) == 0)
+			mode = 0;
+		else
+		{
+			write (2, "Error\n", 6);
+			freesplit(ans);
+			freestack(&stack_a);
+			return ;
+		}
+		k++;
+	}
 	while (ans[k] != NULL)
 	{
 		if (num_checker(ans[k]) == 1)//checks for numbers only
@@ -461,7 +501,7 @@ void	error_checker(int argc, char **argv)
 	}//checks if the inputs are already sorted.
 	//here u can then pass to the algo part.
 	j = disorder_calculator(stack_a);
-	index_creator(&stack_a, j);
+	index_creator(&stack_a, j, mode);
 	//printf("%f\n", j);
 	/*current = stack_a;
 	while (current != NULL)
