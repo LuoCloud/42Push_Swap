@@ -6,7 +6,7 @@
 /*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 00:19:55 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/10/03 02:38:08 by cchien-s         ###   ########.fr       */
+/*   Updated: 2026/10/03 02:58:37 by cchien-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -377,6 +377,7 @@ void	assigner(t_node **stack_a, float j, int mode)
 	int		size;
 
 	stack_b = NULL;
+	mode = 0;
 	size = ft_lstsize2(*stack_a);
 	if (mode >= 1 && mode <= 3)
 	{

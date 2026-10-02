@@ -6,7 +6,7 @@
 /*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 00:20:07 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/10/03 00:53:14 by cchien-s         ###   ########.fr       */
+/*   Updated: 2026/10/03 02:42:06 by cchien-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	push(t_node **src, t_node **dest);
 void	pa(t_node **stack_a, t_node **stack_b);
 void	pb(t_node **stack_a, t_node **stack_b);
 void	error_checker(int argc, char **argv);
-void	index_creator(t_node **stack, float	j);
-void	assigner(t_node **stack_a, float j);
+void	index_creator(t_node **stack, float	j, int mode);
+void	assigner(t_node **stack_a, float j, int mode);
 void    simple(t_node **stack_a, t_node **stack_b);
 void	complex(t_node **stack_a, t_node **stack_b);
 void	move_to_top(t_node **stack_a, int pos, int size);
