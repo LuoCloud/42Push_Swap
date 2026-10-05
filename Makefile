@@ -6,11 +6,11 @@
 #    By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/11 00:20:12 by cchien-s          #+#    #+#              #
-#    Updated: 2026/10/03 00:55:16 by cchien-s         ###   ########.fr        #
+#    Updated: 2026/10/06 05:24:30 by cchien-s         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = pushswap
+NAME = push_swap
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 

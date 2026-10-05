@@ -6,7 +6,7 @@
 /*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 00:19:55 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/10/03 02:58:37 by cchien-s         ###   ########.fr       */
+/*   Updated: 2026/10/06 05:26:32 by cchien-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	num_checker(char *str)
 		return (1);
 	if (str[i] == '-' || str[i] == '+')
 		i++;
-	if (str[i] == '\0')//this is to catch stadalone + or -
+	if (str[i] == '\0') //this is to catch stadalone + or -
 		return (1);
 	while (str[i] != '\0')
 	{
@@ -55,7 +55,7 @@ int	num_checker(char *str)
 	return (0);
 }
 
-t_node	*create_node(int	value)
+t_node	*create_node(int value)
 {
 	t_node	*new_node;
 
@@ -154,7 +154,7 @@ float	disorder_calculator(t_node *stack)
 		}
 		current = current->next;
 	}
-	return (mistakes/pairs);
+	return (mistakes / pairs);
 }
 
 void	rotate(t_node **stack)
@@ -178,7 +178,7 @@ void	ra(t_node **stack_a)
 {
 	rotate(stack_a);
 	write(1, "ra\n", 3);
-	return ;	
+	return ;
 }
 
 void	rb(t_node **stack_b)
@@ -240,7 +240,7 @@ void	swap(t_node **stack)
 	t_node	*first;
 	t_node	*second;
 
-	if(!stack || !*stack || !(*stack)->next)
+	if (!stack || !*stack || !(*stack)->next)
 		return ;
 	first = *stack;
 	second = first->next;
@@ -304,11 +304,11 @@ void	pb(t_node **stack_a, t_node **stack_b)
 	return ;
 }
 
-unsigned int	bit_counterf (t_node **stack_a)
+unsigned int	bit_counterf(t_node **stack_a)
 {
-	t_node	*current;
-	unsigned int count;
-	int	max_index;
+	t_node			*current;
+	unsigned int	count;
+	int				max_index;
 
 	if (!stack_a || !*stack_a || !(*stack_a)->next)
 		return (0);
@@ -338,19 +338,28 @@ unsigned int	ft_lstsize2(t_node *lst)
 	}
 	return (i);
 }
+/*void	testprint (t_node **stack_a)
+{
+	t_node	*current;
+
+	current = *stack_a;
+	while (current != NULL)
+	{
+		printf("%d\n", current->value);
+		current = current->next;
+	}
+}*/
 
 void	complex(t_node **stack_a, t_node **stack_b)
 {
-	t_node	*current;
+	t_node			*current;
 	unsigned int	nonodes;
 	unsigned int	size;
 	unsigned int	bit_increment;
-	unsigned int	noofbits;
 
 	bit_increment = 0;
 	nonodes = ft_lstsize2(*stack_a);
-	noofbits = bit_counterf(stack_a);
-	while (bit_increment < noofbits)
+	while (bit_increment < bit_counterf(stack_a))
 	{
 		size = 0;
 		if (is_sorted (*stack_a) == 0)
@@ -358,7 +367,7 @@ void	complex(t_node **stack_a, t_node **stack_b)
 		while (size < nonodes)
 		{
 			current = *stack_a;
-			if (((current->index >> bit_increment) & 1)== 1)
+			if (((current->index >> bit_increment) & 1) == 1)
 				ra(stack_a);
 			else
 				pb (stack_a, stack_b);
@@ -368,7 +377,6 @@ void	complex(t_node **stack_a, t_node **stack_b)
 			pa (stack_a, stack_b);
 		bit_increment++;
 	}
-	return ;
 }
 
 void	assigner(t_node **stack_a, float j, int mode)
@@ -377,7 +385,6 @@ void	assigner(t_node **stack_a, float j, int mode)
 	int		size;
 
 	stack_b = NULL;
-	mode = 0;
 	size = ft_lstsize2(*stack_a);
 	if (mode >= 1 && mode <= 3)
 	{
@@ -389,17 +396,17 @@ void	assigner(t_node **stack_a, float j, int mode)
 			complex(stack_a, &stack_b);
 		return ;
 	}
-	if (size <= 5)
+	if (size <= 5 && mode == 0)
 		limit_five(stack_a, size);
-	else if (j < 0.2)
+	else if (j < 0.2 && mode == 0)
 		simple(stack_a, &stack_b);
-	/*else if (j >= 0.2 && j < 0.5)
+	/*else if (j >= 0.2 && j < 0.5 && mode == 0)
 		medium(stack_a, &stack_b);*/
-	else if (j >= 0.5)
+	else if (j >= 0.5 && mode == 0)
 		complex(stack_a, &stack_b);
 }
 
-void	index_creator(t_node **stack, float	j, int mode)
+void	index_creator(t_node **stack, float j, int mode)
 {
 	t_node	*temp;
 	t_node	*current;
@@ -424,82 +431,59 @@ void	index_creator(t_node **stack, float	j, int mode)
 	return ;
 }
 
-void	error_checker(int argc, char **argv)
+void	error_checkerfreer(char **ans, t_node *stack_a)
 {
-	int	i;
-	int	k;
-	char	**ans;
-	char	*strjoin;
-	char	*temp1;
-	char	*temp2;
-	t_node	*new_node;
-	t_node	*stack_a = NULL;
-	float	j;
-	int	mode;
-	//t_node	*current;
+	write (2, "Error\n", 6);
+	freesplit(ans);
+	freestack(&stack_a);
+	return ;
+}
 
-	i = 1;
+t_node	*helper_nodecreator(char **ans)
+{
+	int		k;
+	t_node	*stack_a;
+	t_node	*new_node;
+
 	k = 0;
-	mode = 0;
-	strjoin = ft_strdup("");
-	if (argv == NULL)
-		return ;
-	while (i < argc)
-	{
-		temp1 = ft_strjoin(strjoin, argv[i]);
-		temp2 = ft_strjoin(temp1, " ");
-		free(strjoin);
-		free(temp1);
-		strjoin = temp2;
-		i++;
-	}//joins the inputs into one string
-	ans = ft_split(strjoin, ' ');//split it into a 2D array.
-	free (strjoin);
+	stack_a = NULL;
+	new_node = NULL;
 	if (ans[0] != NULL && ans[0][0] == '-' && ans[0][1] == '-')
-	{
-		if (ft_strncmp(ans[0], "--simple", 9) == 0)
-			mode = 1;
-		else if (ft_strncmp(ans[0], "--medium", 9) == 0)
-			mode = 2;
-		else if (ft_strncmp(ans[0], "--complex", 10) == 0)
-			mode = 3;
-		else if (ft_strncmp(ans[0], "--adaptive", 11) == 0)
-			mode = 0;
-		else
-		{
-			write (2, "Error\n", 6);
-			freesplit(ans);
-			freestack(&stack_a);
-			return ;
-		}
-		k++;
-	}
+		k = 1;
 	while (ans[k] != NULL)
 	{
-		if (num_checker(ans[k]) == 1)//checks for numbers only
+		if (num_checker(ans[k]) == 1) //checks for numbers only
 		{
-			write (2, "Error\n", 6);
-			freesplit(ans);
-			freestack(&stack_a);
-			return ;
+			error_checkerfreer (ans, stack_a);
+			exit (0);
 		}
 		new_node = create_node(ft_atoi(ans[k]));
 		add_node_back(&stack_a, new_node);
 		k++;
 	}
+	return (stack_a);
+}
+
+void	error_checkercont2(char **ans, int mode)
+{
+	float	j;
+	t_node	*stack_a;
+
+	j = 0.0;
+	stack_a = helper_nodecreator (ans);
 	if (num_checker2(&stack_a) == 1)
 	{
-		write (2, "Error\n", 6);
-		freesplit(ans);
-		freestack(&stack_a);
+		error_checkerfreer (ans, stack_a);
 		return ;
-	}//check for repeating numbers
+	}
+	//check for repeating numbers
 	if (is_sorted(stack_a) == 0)
 	{
 		freesplit(ans);
 		freestack(&stack_a);
 		exit (0);
-	}//checks if the inputs are already sorted.
+	}
+	//checks if the inputs are already sorted.
 	//here u can then pass to the algo part.
 	j = disorder_calculator(stack_a);
 	index_creator(&stack_a, j, mode);
@@ -514,11 +498,72 @@ void	error_checker(int argc, char **argv)
 	freestack(&stack_a);
 	return ;
 }
-int	main (int argc, char *argv[])
+
+void	error_checkercont(char *strjoin)
+{
+	char	**ans;
+	int		mode;
+
+	mode = 0;
+	ans = ft_split(strjoin, ' ');//split it into a 2D array.
+	free (strjoin);
+	if (ans[0] != NULL && ans[0][0] == '-' && ans[0][1] == '-')
+	{
+		if (ft_strncmp(ans[0], "--simple", 9) == 0)
+			mode = 1;
+		else if (ft_strncmp(ans[0], "--medium", 9) == 0)
+			mode = 2;
+		else if (ft_strncmp(ans[0], "--complex", 10) == 0)
+			mode = 3;
+		else if (ft_strncmp(ans[0], "--adaptive", 11) == 0)
+			mode = 0;
+		else
+		{
+			freesplit(ans);
+			return ;
+		}
+	}
+	error_checkercont2 (ans, mode);
+	return ;
+}
+
+void	helper_error_checker(char *strjoin)
+{
+	free(strjoin);
+	write(1, "Error\n", 6);
+}
+
+void	error_checker(int argc, char **argv)
+{
+	int		i;
+	char	*temp1;
+	char	*temp2;
+	char	*strjoin;
+
+	i = 1;
+	if (argv == NULL)
+		return ;
+	strjoin = ft_strdup("");
+	while (i < argc)
+	{
+		temp1 = ft_strjoin(strjoin, argv[i]);
+		temp2 = ft_strjoin(temp1, " ");
+		free(strjoin);
+		free(temp1);
+		strjoin = temp2;
+		i++;
+	}
+	if (num_checker(strjoin) == 0)
+		error_checkercont (strjoin);
+	//joins the inputs into one string
+	//free(temp2);
+	else
+		helper_error_checker(strjoin);
+}
+
+int	main(int argc, char *argv[])
 {
 	if (argc >= 2)
 		error_checker(argc, argv);
-	else
-		write (2, "Error\n", 6);
 	return (0);
 }
