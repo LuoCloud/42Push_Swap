@@ -6,7 +6,7 @@
 /*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 00:19:55 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/10/02 01:11:19 by wli-ting         ###   ########.fr       */
+/*   Updated: 2026/10/06 05:26:32 by cchien-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@ int	num_checker2(t_node **ans)
 	while (lst->next != NULL)
 	{
 		lst2 = lst->next;
-		if (lst->value == lst2->value)
-			return (1);
+		while (lst2 != NULL)
+		{
+			if (lst->value == lst2->value)
+				return (1);
+			lst2 = lst2->next;
+		}
 		lst = lst->next;
 	}
 	return (0);
@@ -40,7 +44,7 @@ int	num_checker(char *str)
 		return (1);
 	if (str[i] == '-' || str[i] == '+')
 		i++;
-	if (str[i] == '\0')//this is to catch stadalone + or -
+	if (str[i] == '\0') //this is to catch stadalone + or -
 		return (1);
 	while (str[i] != '\0')
 	{
@@ -51,7 +55,7 @@ int	num_checker(char *str)
 	return (0);
 }
 
-t_node	*create_node(int	value)
+t_node	*create_node(int value)
 {
 	t_node	*new_node;
 
@@ -81,21 +85,21 @@ void	add_node_back(t_node **stack, t_node *new_node)
 	last->next = new_node;
 }
 
-void	freestack(t_node **stack_a)
+void	freestack(t_node **stacka)
 {
 	t_node	*current;
 	t_node	*temp;	
 
-	if (!stack_a || !*stack_a)
+	if (!stacka || !*stacka)
 		return ;
-	current = *stack_a;
+	current = *stacka;
 	while (current != NULL)
 	{
 		temp = current->next;
 		free(current);
 		current = temp;
 	}
-	*stack_a = NULL;
+	*stacka = NULL;
 }
 
 void	freesplit(char **str_array)
@@ -150,7 +154,176 @@ float	disorder_calculator(t_node *stack)
 		}
 		current = current->next;
 	}
-	return (mistakes/pairs);
+	return (mistakes / pairs);
+}
+
+void	rotate(t_node **stack)
+{
+	t_node	*first;
+	t_node	*last;
+
+	if (!stack || !*stack || !(*stack)->next)
+		return ;
+	first = *stack;
+	last = *stack;
+	while (last->next != NULL)
+		last = last->next;
+	*stack = first->next;
+	last->next = first;
+	first->next = NULL;
+	return ;
+}
+
+void	ra(t_node **stack_a)
+{
+	rotate(stack_a);
+	write(1, "ra\n", 3);
+	return ;
+}
+
+void	rb(t_node **stack_b)
+{
+	rotate(stack_b);
+	write(1, "rb\n", 3);
+	return ;
+}
+
+void	rr(t_node **stack_a, t_node **stack_b)
+{
+	rotate(stack_a);
+	rotate(stack_b);
+	write(1, "rr\n", 3);
+	return ;
+}
+
+void	reverserotate(t_node **stack)
+{
+	t_node	*second_last;
+	t_node	*last;
+
+	if (!stack || !*stack || !(*stack)->next)
+		return ;
+	second_last = *stack;
+	while (second_last->next->next != NULL)
+		second_last = second_last->next;
+	last = second_last->next;
+	last->next = *stack;
+	*stack = last;
+	second_last->next = NULL;
+	return ;
+}
+
+void	rra(t_node **stack_a)
+{
+	reverserotate(stack_a);
+	write(1, "rra\n", 4);
+	return ;
+}
+
+void	rrb(t_node **stack_b)
+{
+	reverserotate(stack_b);
+	write(1, "rrb\n", 4);
+	return ;
+}
+
+void	rrr(t_node **stack_a, t_node **stack_b)
+{
+	reverserotate(stack_a);
+	reverserotate(stack_b);
+	write(1, "rrr\n", 4);
+	return ;
+}
+
+void	swap(t_node **stack)
+{
+	t_node	*first;
+	t_node	*second;
+
+	if (!stack || !*stack || !(*stack)->next)
+		return ;
+	first = *stack;
+	second = first->next;
+	first->next = second->next;
+	second->next = first;
+	*stack = second;
+	/*while (*stack != NULL)
+	{
+		printf("%d\n", (*stack)->value);
+		*stack = (*stack)->next;
+	}*/
+	return ;
+}
+
+void	sa(t_node **stack_a)
+{
+	swap(stack_a);
+	write(1, "sa\n", 3);
+	return ;
+}
+
+void	sb(t_node **stack_b)
+{
+	swap(stack_b);
+	write(1, "sb\n", 3);
+	return ;
+}
+
+void	ss(t_node **stack_a, t_node **stack_b)
+{
+	swap(stack_a);
+	swap(stack_b);
+	write(1, "ss\n", 3);
+	return ;
+}
+
+void	push(t_node **src, t_node **dest)
+{
+	t_node	*temp;
+
+	if (!src || !*src)
+		return ;
+	temp = *src;
+	*src = (*src)->next;
+	temp->next = *dest;
+	*dest = temp;
+	return ;
+}
+
+void	pa(t_node **stack_a, t_node **stack_b)
+{
+	push(stack_b, stack_a);
+	write(1, "pa\n", 3);
+	return ;
+}
+
+void	pb(t_node **stack_a, t_node **stack_b)
+{
+	push(stack_a, stack_b);
+	write(1, "pb\n", 3);
+	return ;
+}
+
+unsigned int	bit_counterf(t_node **stack_a)
+{
+	t_node			*current;
+	unsigned int	count;
+	int				max_index;
+
+	if (!stack_a || !*stack_a || !(*stack_a)->next)
+		return (0);
+	current = *stack_a;
+	count = 0;
+	max_index = 0;
+	while (current != NULL)
+	{
+		if (current->index > max_index)
+			max_index = current->index;
+		current = current->next;
+	}
+	while ((max_index >> count) != 0)
+		count++;
+	return (count);
 }
 
 unsigned int	ft_lstsize2(t_node *lst)
@@ -165,130 +338,155 @@ unsigned int	ft_lstsize2(t_node *lst)
 	}
 	return (i);
 }
+/*void	testprint (t_node **stack_a)
+{
+	t_node	*current;
+
+	current = *stack_a;
+	while (current != NULL)
+	{
+		printf("%d\n", current->value);
+		current = current->next;
+	}
+}*/
 
 void	complex(t_node **stack_a, t_node **stack_b)
 {
-	t_node	*current;
+	t_node			*current;
 	unsigned int	nonodes;
-	int	size;
-	int	bit_increment;
-	int	bit_counter;
+	unsigned int	size;
+	unsigned int	bit_increment;
 
-	size = 0;
 	bit_increment = 0;
-	nonodes = ft_lstsize (&stack_a);
-	bit_counter = bit_counterf (&stack_a);
-	current = *stack_a;
-	while (current->next != NULL)
+	nonodes = ft_lstsize2(*stack_a);
+	while (bit_increment < bit_counterf(stack_a))
 	{
+		size = 0;
+		if (is_sorted (*stack_a) == 0)
+			break ;
 		while (size < nonodes)
 		{
 			current = *stack_a;
-			if (((current->index >> bit_increment) & 1)== 1)
-				ra(&stack_a);
+			if (((current->index >> bit_increment) & 1) == 1)
+				ra(stack_a);
 			else
-				pb (&stack_a, &stack_b);
+				pb (stack_a, stack_b);
 			size++;
 		}
-		current = current->next;
+		while (*stack_b != NULL)
+			pa (stack_a, stack_b);
 		bit_increment++;
 	}
 }
 
-void	assigner(t_node **stack_a, float j)
+void	assigner(t_node **stack_a, float j, int mode)
 {
 	t_node	*stack_b;
 	int		size;
 
 	stack_b = NULL;
 	size = ft_lstsize2(*stack_a);
-	if (size <= 5)
+	if (mode >= 1 && mode <= 3)
+	{
+		if (mode == 1)
+			simple(stack_a, &stack_b);
+		/*else if (mode == 2)
+			medium(stack_a, &stack_b);*/
+		else if (mode == 3)
+			complex(stack_a, &stack_b);
+		return ;
+	}
+	if (size <= 5 && mode == 0)
 		limit_five(stack_a, size);
-	else if (j < 0.5)
+	else if (j < 0.2 && mode == 0)
 		simple(stack_a, &stack_b);
-	else if (j >= 0.5)
-		complex(&stack_a, &stack_b);
+	/*else if (j >= 0.2 && j < 0.5 && mode == 0)
+		medium(stack_a, &stack_b);*/
+	else if (j >= 0.5 && mode == 0)
+		complex(stack_a, &stack_b);
 }
 
-void	index_creator(t_node *stack, float	j)
+void	index_creator(t_node **stack, float j, int mode)
 {
 	t_node	*temp;
+	t_node	*current;
 	t_node	*start;
 
-	start = stack;
-	while (stack)
+	if (!stack || !(*stack)->next || j == 0.0)
+		return ;
+	start = *stack;
+	current = *stack;
+	while (current)
 	{
 		temp = start;
 		while (temp)
 		{
-			if (stack->value > temp->value)
-				++stack->index;
+			if (current->value > temp->value)
+				++current->index;
 			temp = temp->next;
 		}
-		stack = stack->next;
+		current = current->next;
 	}
-	assigner(&stack, j);
+	assigner(stack, j, mode);
 	return ;
 }
 
-void	error_checker(int argc, char **argv)
+void	error_checkerfreer(char **ans, t_node *stack_a)
 {
-	int	i;
-	int	k;
-	char	**ans;
-	char	*strjoin;
-	char	*temp1;
-	char	*temp2;
-	t_node	*new_node;
-	t_node	*stack_a = NULL;
-	float	j;
-	//t_node	*current;
+	write (2, "Error\n", 6);
+	freesplit(ans);
+	freestack(&stack_a);
+	return ;
+}
 
-	i = 1;
+t_node	*helper_nodecreator(char **ans)
+{
+	int		k;
+	t_node	*stack_a;
+	t_node	*new_node;
+
 	k = 0;
-	strjoin = ft_strdup("");
-	if (argv == NULL)
-		return ;
-	while (i < argc)
-	{
-		temp1 = ft_strjoin(strjoin, argv[i]);
-		temp2 = ft_strjoin(temp1, " ");
-		free(strjoin);
-		free(temp1);
-		strjoin = temp2;
-		i++;
-	}//joins the inputs into one string
-	ans = ft_split(strjoin, ' ');//split it into a 2D array.
-	free (strjoin);
+	stack_a = NULL;
+	new_node = NULL;
+	if (ans[0] != NULL && ans[0][0] == '-' && ans[0][1] == '-')
+		k = 1;
 	while (ans[k] != NULL)
 	{
-		if (num_checker(ans[k]) == 1)//checks for numbers only
+		if (num_checker(ans[k]) == 1) //checks for numbers only
 		{
-			write (2, "Error\n", 6);
-			freesplit(ans);
-			freestack(&stack_a);
-			return ;
+			error_checkerfreer (ans, stack_a);
+			exit (0);
 		}
 		new_node = create_node(ft_atoi(ans[k]));
 		add_node_back(&stack_a, new_node);
 		k++;
 	}
+	return (stack_a);
+}
+
+void	error_checkercont2(char **ans, int mode)
+{
+	float	j;
+	t_node	*stack_a;
+
+	j = 0.0;
+	stack_a = helper_nodecreator (ans);
 	if (num_checker2(&stack_a) == 1)
 	{
-		write (2, "Error\n", 6);
-		freesplit(ans);
-		freestack(&stack_a);
+		error_checkerfreer (ans, stack_a);
 		return ;
-	}//check for repeating numbers
+	}
+	//check for repeating numbers
 	if (is_sorted(stack_a) == 0)
 	{
 		freesplit(ans);
 		freestack(&stack_a);
-		exit (1);
-	}//checks if the inputs are already sorted.
+		exit (0);
+	}
+	//checks if the inputs are already sorted.
 	//here u can then pass to the algo part.
 	j = disorder_calculator(stack_a);
-	index_creator(stack_a, j);
+	index_creator(&stack_a, j, mode);
 	//printf("%f\n", j);
 	/*current = stack_a;
 	while (current != NULL)
@@ -300,11 +498,72 @@ void	error_checker(int argc, char **argv)
 	freestack(&stack_a);
 	return ;
 }
-int	main (int argc, char *argv[])
+
+void	error_checkercont(char *strjoin)
+{
+	char	**ans;
+	int		mode;
+
+	mode = 0;
+	ans = ft_split(strjoin, ' ');//split it into a 2D array.
+	free (strjoin);
+	if (ans[0] != NULL && ans[0][0] == '-' && ans[0][1] == '-')
+	{
+		if (ft_strncmp(ans[0], "--simple", 9) == 0)
+			mode = 1;
+		else if (ft_strncmp(ans[0], "--medium", 9) == 0)
+			mode = 2;
+		else if (ft_strncmp(ans[0], "--complex", 10) == 0)
+			mode = 3;
+		else if (ft_strncmp(ans[0], "--adaptive", 11) == 0)
+			mode = 0;
+		else
+		{
+			freesplit(ans);
+			return ;
+		}
+	}
+	error_checkercont2 (ans, mode);
+	return ;
+}
+
+void	helper_error_checker(char *strjoin)
+{
+	free(strjoin);
+	write(1, "Error\n", 6);
+}
+
+void	error_checker(int argc, char **argv)
+{
+	int		i;
+	char	*temp1;
+	char	*temp2;
+	char	*strjoin;
+
+	i = 1;
+	if (argv == NULL)
+		return ;
+	strjoin = ft_strdup("");
+	while (i < argc)
+	{
+		temp1 = ft_strjoin(strjoin, argv[i]);
+		temp2 = ft_strjoin(temp1, " ");
+		free(strjoin);
+		free(temp1);
+		strjoin = temp2;
+		i++;
+	}
+	if (num_checker(strjoin) == 0)
+		error_checkercont (strjoin);
+	//joins the inputs into one string
+	//free(temp2);
+	else
+		helper_error_checker(strjoin);
+}
+
+int	main(int argc, char *argv[])
 {
 	if (argc >= 2)
 		error_checker(argc, argv);
-	else
-		write (2, "Error\n", 6);
 	return (0);
 }
