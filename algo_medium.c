@@ -1,4 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   algo_medium.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wli-ting <wli-ting@student.42kl.edu.m      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/11 16:22:47 by wli-ting          #+#    #+#             */
+/*   Updated: 2026/10/11 16:51:09 by wli-ting         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
+
+static void	sort_bucket(t_node **a, t_node **b, int lower, int upper);
+static void	distribute_bucket(t_node **a, t_node **b, int lower, int upper);
+static void	rotate_b_to_top(t_node **b, int pos, int size);
+static void	move_rank_a(t_node **a, t_node **b, int rank);
 
 static void	distribute_bucket(t_node **a, t_node **b, int lower, int upper)
 {
