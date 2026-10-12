@@ -6,18 +6,20 @@
 /*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 00:19:55 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/10/06 05:26:32 by cchien-s         ###   ########.fr       */
+/*   Updated: 2026/10/13 03:06:14 by cchien-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
+//#include <stdio.h>
 
 int	num_checker2(t_node **ans)
 {
 	t_node	*lst;
 	t_node	*lst2;
 
+	if (!ans || !*ans)
+		return (1);
 	lst = *ans;
 	while (lst->next != NULL)
 	{
@@ -35,23 +37,23 @@ int	num_checker2(t_node **ans)
 
 int	num_checker(char *str)
 {
-	unsigned int	i;
-	unsigned int	j;
+	int	i;
 
 	i = 0;
-	j = 0;
-	if (!str || str[i] == '\0')
+	if (!str)
 		return (1);
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
+		i++;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
-	if (str[i] == '\0') //this is to catch stadalone + or -
+	if (str[i] < '0' || str[i] > '9')
 		return (1);
-	while (str[i] != '\0')
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (1);
+	while (str[i] >= '0' && str[i] <= '9')
 		i++;
-	}
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
+		i++;
+	if (str[i] != '\0')
+		return (1);
 	return (0);
 }
 
@@ -247,11 +249,6 @@ void	swap(t_node **stack)
 	first->next = second->next;
 	second->next = first;
 	*stack = second;
-	/*while (*stack != NULL)
-	{
-		printf("%d\n", (*stack)->value);
-		*stack = (*stack)->next;
-	}*/
 	return ;
 }
 
@@ -390,18 +387,17 @@ void	assigner(t_node **stack_a, float j, int mode)
 	{
 		if (mode == 1)
 			simple(stack_a, &stack_b);
-		/*else if (mode == 2)
-			medium(stack_a, &stack_b);*/
+		else if (mode == 2)
+			medium(stack_a, &stack_b);
 		else if (mode == 3)
 			complex(stack_a, &stack_b);
-		return ;
 	}
 	if (size <= 5 && mode == 0)
 		limit_five(stack_a, size);
 	else if (j < 0.2 && mode == 0)
 		simple(stack_a, &stack_b);
-	/*else if (j >= 0.2 && j < 0.5 && mode == 0)
-		medium(stack_a, &stack_b);*/
+	else if (j >= 0.2 && j < 0.5 && mode == 0)
+		medium(stack_a, &stack_b);
 	else if (j >= 0.5 && mode == 0)
 		complex(stack_a, &stack_b);
 }
@@ -439,17 +435,15 @@ void	error_checkerfreer(char **ans, t_node *stack_a)
 	return ;
 }
 
-t_node	*helper_nodecreator(char **ans)
+t_node	*helper_nodecreator(char **ans, int start_index)
 {
 	int		k;
 	t_node	*stack_a;
 	t_node	*new_node;
 
-	k = 0;
 	stack_a = NULL;
 	new_node = NULL;
-	if (ans[0] != NULL && ans[0][0] == '-' && ans[0][1] == '-')
-		k = 1;
+	k = start_index;
 	while (ans[k] != NULL)
 	{
 		if (num_checker(ans[k]) == 1) //checks for numbers only
@@ -464,13 +458,13 @@ t_node	*helper_nodecreator(char **ans)
 	return (stack_a);
 }
 
-void	error_checkercont2(char **ans, int mode)
+void	error_checkercont2(char **ans, int mode, int k)
 {
 	float	j;
 	t_node	*stack_a;
 
 	j = 0.0;
-	stack_a = helper_nodecreator (ans);
+	stack_a = helper_nodecreator (ans, k);
 	if (num_checker2(&stack_a) == 1)
 	{
 		error_checkerfreer (ans, stack_a);
@@ -522,15 +516,17 @@ void	error_checkercont(char *strjoin)
 			freesplit(ans);
 			return ;
 		}
+		error_checkercont2 (ans, mode, 1);
+		return ;
 	}
-	error_checkercont2 (ans, mode);
-	return ;
+	error_checkercont2 (ans, mode, 0);
 }
 
 void	helper_error_checker(char *strjoin)
 {
 	free(strjoin);
 	write(1, "Error\n", 6);
+	exit (0);
 }
 
 void	error_checker(int argc, char **argv)
@@ -553,12 +549,11 @@ void	error_checker(int argc, char **argv)
 		strjoin = temp2;
 		i++;
 	}
-	if (num_checker(strjoin) == 0)
-		error_checkercont (strjoin);
+	error_checkercont (strjoin);
 	//joins the inputs into one string
 	//free(temp2);
-	else
-		helper_error_checker(strjoin);
+	/*else
+		helper_error_checker(strjoin);*/
 }
 
 int	main(int argc, char *argv[])

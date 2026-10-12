@@ -6,7 +6,7 @@
 #    By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/11 00:20:12 by cchien-s          #+#    #+#              #
-#    Updated: 2026/10/06 05:24:30 by cchien-s         ###   ########.fr        #
+#    Updated: 2026/10/13 00:11:16 by cchien-s         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,8 @@ SRCS = ft_atoi.c \
 	push_swap.c \
 	algo_small.c\
 	algo_simple.c \
+	algo_utils.c\
+	algo_medium.c\
 
 OBJS = $(SRCS:.c=.o)
 
