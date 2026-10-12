@@ -6,12 +6,29 @@
 /*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 00:19:55 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/10/13 03:06:14 by cchien-s         ###   ########.fr       */
+/*   Updated: 2026/10/13 04:19:44 by cchien-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 //#include <stdio.h>
+
+/*int	num_checker3(t_node **ans)
+{
+	t_node	*ansk;
+	long int	i;
+	long int	j;
+
+	ansk = *ans;
+	i = -2147483649;
+	j = 2147483648;
+	if (ansk->value <= i || ansk->value >= j)
+	{
+		write(2, "Error\n", 6);
+		return (1);
+	}
+	return (0);
+}*/
 
 int	num_checker2(t_node **ans)
 {
@@ -28,6 +45,8 @@ int	num_checker2(t_node **ans)
 		{
 			if (lst->value == lst2->value)
 				return (1);
+			/*else if (num_checker3(ans) == 1)
+				return (1);*/
 			lst2 = lst2->next;
 		}
 		lst = lst->next;
@@ -435,6 +454,33 @@ void	error_checkerfreer(char **ans, t_node *stack_a)
 	return ;
 }
 
+long	ft_atoi2(const char *str)
+{
+	unsigned int	i;
+	long			j;
+	int				l;
+
+	i = 0;
+	j = 0;
+	l = 1;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			l = -1;
+		i++;
+	}
+	while (str[i] != '\0' && (str[i] >= '0' && str[i] <= '9'))
+	{
+		j = (j * 10) + (str[i] - 48);
+		if ((j * l) > 2147483647 || (j * l) < -2147483648)
+			return (3000000000);
+		i++;
+	}
+	return ((int)(l * j));
+}
+
 t_node	*helper_nodecreator(char **ans, int start_index)
 {
 	int		k;
@@ -451,7 +497,12 @@ t_node	*helper_nodecreator(char **ans, int start_index)
 			error_checkerfreer (ans, stack_a);
 			exit (0);
 		}
-		new_node = create_node(ft_atoi(ans[k]));
+		if (ft_atoi2(ans[k]) == 3000000000)
+		{
+			error_checkerfreer(ans, stack_a);
+			exit (0);
+		}
+		new_node = create_node((int)ft_atoi2(ans[k]));
 		add_node_back(&stack_a, new_node);
 		k++;
 	}
@@ -496,36 +547,34 @@ void	error_checkercont2(char **ans, int mode, int k)
 void	error_checkercont(char *strjoin)
 {
 	char	**ans;
-	int		mode;
 
-	mode = 0;
 	ans = ft_split(strjoin, ' ');//split it into a 2D array.
 	free (strjoin);
 	if (ans[0] != NULL && ans[0][0] == '-' && ans[0][1] == '-')
 	{
 		if (ft_strncmp(ans[0], "--simple", 9) == 0)
-			mode = 1;
+			error_checkercont2 (ans, 1, 1);
 		else if (ft_strncmp(ans[0], "--medium", 9) == 0)
-			mode = 2;
+			error_checkercont2 (ans, 2, 1);
 		else if (ft_strncmp(ans[0], "--complex", 10) == 0)
-			mode = 3;
+			error_checkercont2 (ans, 3, 1);
 		else if (ft_strncmp(ans[0], "--adaptive", 11) == 0)
-			mode = 0;
+			error_checkercont2 (ans, 0, 1);
 		else
 		{
+			write(2, "Error\n", 6);
 			freesplit(ans);
 			return ;
 		}
-		error_checkercont2 (ans, mode, 1);
 		return ;
 	}
-	error_checkercont2 (ans, mode, 0);
+	error_checkercont2 (ans, 0, 0);
 }
 
 void	helper_error_checker(char *strjoin)
 {
 	free(strjoin);
-	write(1, "Error\n", 6);
+	write(2, "Error\n", 6);
 	exit (0);
 }
 

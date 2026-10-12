@@ -6,7 +6,7 @@
 /*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/11 16:19:31 by wli-ting          #+#    #+#             */
-/*   Updated: 2026/10/13 03:05:06 by cchien-s         ###   ########.fr       */
+/*   Updated: 2026/10/13 04:18:40 by cchien-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,3 +57,4 @@ unsigned int	bit_counterf(t_node **stack_a);
 unsigned int	ft_lstsize2(t_node *lst);
 unsigned int	ft_lstsize2(t_node *lst);
 float			disorder_calculator(t_node *stack);
+long			ft_atoi2(const char *str);
