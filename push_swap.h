@@ -92,6 +92,6 @@ int				is_sorted(t_node *stack_a);
 unsigned int	bit_counterf(t_node **stack_a);
 
 // Main //
+void			index_creator(t_node **stack, float j, int mode);
 void		 	assigner(t_node **stack_a, float j, int mode);
 float			disorder_calculator(t_node *stack);
-void			index_creator(t_node **stack, float j, int mode);
