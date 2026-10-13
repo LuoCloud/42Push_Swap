@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   algo_small.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wli-ting <wli-ting@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/10/13 03:00:45 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/10/13 03:00:45 by cchien-s         ###   ########.fr       */
+/*   Created: 2026/10/11 16:21:24 by wli-ting          #+#    #+#             */
+/*   Updated: 2026/10/11 22:28:41 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "push_swap.h"
-//#include <stdio.h>
+#include <stdio.h>
 
 static int	sort_three(t_node **list);
 static int	sort_four(t_node **stack_a, t_node **stack_b);
@@ -43,21 +42,21 @@ static int	sort_three(t_node **list)
 	a = (*list)->index;
 	b = (*list)->next->index;
 	c = (*list)->next->next->index;
-	if ((a > b) && (b > c) && (c < a)) //321
+	if ((a > b) && (b > c) && (c < a))
 	{
 		ra(list);
 		sa(list);
 	}
-	else if ((a < b) && (b > c) && (c > a)) //132
+	else if ((a < b) && (b > c) && (c > a))
 	{
 		rra(list);
 		sa(list);
 	}
-	else if ((a > b) && (b < c) && (c > a)) //213
+	else if ((a > b) && (b < c) && (c > a))
 		sa(list);
-	else if ((a > b) && (b < c) && (c < a)) //312
+	else if ((a > b) && (b < c) && (c < a))
 		ra(list);
-	else if ((a < b) && (b > c) && (c < a)) //231
+	else if ((a < b) && (b > c) && (c < a))
 		rra(list);
 	return (1);
 }

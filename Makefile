@@ -1,21 +1,8 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/09/11 00:20:12 by cchien-s          #+#    #+#              #
-#    Updated: 2026/10/13 00:11:16 by cchien-s         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = push_swap
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = ft_atoi.c \
-	ft_split.c \
+SRCS = ft_split.c \
 	ft_strjoin.c \
 	ft_strlen.c \
 	ft_strdup.c\
@@ -23,8 +10,17 @@ SRCS = ft_atoi.c \
 	push_swap.c \
 	algo_small.c\
 	algo_simple.c \
-	algo_utils.c\
-	algo_medium.c\
+	algo_medium.c \
+	algo_utils.c \
+	algo_utils2.c \
+	algo_utils3.c \
+	algo_complex.c \
+	error_checker.c \
+	num_checker.c \
+	push_op.c \
+	r_rotate_op.c \
+	rotate_op.c \
+	swap_op.c \
 
 OBJS = $(SRCS:.c=.o)
 

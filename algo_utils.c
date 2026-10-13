@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algo_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wli-ting <wli-ting@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/10/13 02:58:27 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/10/13 02:58:27 by cchien-s         ###   ########.fr       */
+/*   Created: 2026/10/13 14:37:12 by wli-ting          #+#    #+#             */
+/*   Updated: 2026/10/13 14:37:12 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,42 @@ int	bucket_count(int size)
 	return (root);
 }
 
-int	find_rank_pos(t_node *stack, int rank)
+int find_rank_pos(t_node *stack, int rank)
 {
-	int	i;
+    int i;
 
-	i = 0;
-	while (stack)
+    i = 0;
+    while (stack)
+    {
+        if (((stack)->index) == rank)
+            return (i);
+        stack = (stack)->next;
+        i++;
+    }
+    return (-1);
+}
+
+void	index_creator(t_node **stack, float j, int mode)
+{
+	t_node	*temp;
+	t_node	*current;
+	t_node	*start;
+
+	if (!stack || !(*stack)->next || j == 0.0)
+		return ;
+	start = *stack;
+	current = *stack;
+	while (current)
 	{
-		if (((stack)->index) == rank)
-			return (i);
-		stack = (stack)->next;
-		i++;
+		temp = start;
+		while (temp)
+		{
+			if (current->value > temp->value)
+				++current->index;
+			temp = temp->next;
+		}
+		current = current->next;
 	}
-	return (-1);
+	assigner(stack, j, mode);
+	return ;
 }
