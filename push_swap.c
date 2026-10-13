@@ -3,132 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wli-ting <wli-ting@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/11 00:19:55 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/10/06 05:26:32 by cchien-s         ###   ########.fr       */
+/*   Created: 2026/10/13 14:37:51 by wli-ting          #+#    #+#             */
+/*   Updated: 2026/10/13 14:37:51 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/11 00:19:55 by cchien-s          #+#    #+#             */
+/*   Updated: 2026/10/13 14:37:51 by wli-ting         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "push_swap.h"
-#include <stdio.h>
 
-int	num_checker2(t_node **ans)
-{
-	t_node	*lst;
-	t_node	*lst2;
-
-	lst = *ans;
-	while (lst->next != NULL)
-	{
-		lst2 = lst->next;
-		while (lst2 != NULL)
-		{
-			if (lst->value == lst2->value)
-				return (1);
-			lst2 = lst2->next;
-		}
-		lst = lst->next;
-	}
-	return (0);
-}
-
-int	num_checker(char *str)
-{
-	unsigned int	i;
-	unsigned int	j;
-
-	i = 0;
-	j = 0;
-	if (!str || str[i] == '\0')
-		return (1);
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	if (str[i] == '\0') //this is to catch stadalone + or -
-		return (1);
-	while (str[i] != '\0')
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-t_node	*create_node(int value)
-{
-	t_node	*new_node;
-
-	new_node = malloc(sizeof (t_node));
-	if (!new_node)
-		return (NULL);
-	new_node->value = value;
-	new_node->index = 0;
-	new_node->next = NULL;
-	return (new_node);
-}
-
-void	add_node_back(t_node **stack, t_node *new_node)
-{
-	t_node	*last;
-
-	if (!stack || !new_node)
-		return ;
-	if (*stack == NULL)
-	{
-		*stack = new_node;
-		return ;
-	}
-	last = *stack;
-	while (last->next != NULL)
-		last = last->next;
-	last->next = new_node;
-}
-
-void	freestack(t_node **stacka)
-{
-	t_node	*current;
-	t_node	*temp;	
-
-	if (!stacka || !*stacka)
-		return ;
-	current = *stacka;
-	while (current != NULL)
-	{
-		temp = current->next;
-		free(current);
-		current = temp;
-	}
-	*stacka = NULL;
-}
-
-void	freesplit(char **str_array)
-{
-	int	i;
-
-	i = 0;
-	if (!str_array)
-		return ;
-	while (str_array[i] != NULL)
-	{
-		free(str_array[i]);
-		i++;
-	}
-	free (str_array);
-}
-
-int	is_sorted(t_node *stack_a)
-{
-	if (!stack_a)
-		return (0);
-	while (stack_a->next != NULL)
-	{
-		if (stack_a->value > stack_a->next->value)
-			return (1);
-		stack_a = stack_a->next;
-	}
-	return (0);
-}
 
 float	disorder_calculator(t_node *stack)
 {
@@ -157,187 +53,8 @@ float	disorder_calculator(t_node *stack)
 	return (mistakes / pairs);
 }
 
-void	rotate(t_node **stack)
-{
-	t_node	*first;
-	t_node	*last;
 
-	if (!stack || !*stack || !(*stack)->next)
-		return ;
-	first = *stack;
-	last = *stack;
-	while (last->next != NULL)
-		last = last->next;
-	*stack = first->next;
-	last->next = first;
-	first->next = NULL;
-	return ;
-}
 
-void	ra(t_node **stack_a)
-{
-	rotate(stack_a);
-	write(1, "ra\n", 3);
-	return ;
-}
-
-void	rb(t_node **stack_b)
-{
-	rotate(stack_b);
-	write(1, "rb\n", 3);
-	return ;
-}
-
-void	rr(t_node **stack_a, t_node **stack_b)
-{
-	rotate(stack_a);
-	rotate(stack_b);
-	write(1, "rr\n", 3);
-	return ;
-}
-
-void	reverserotate(t_node **stack)
-{
-	t_node	*second_last;
-	t_node	*last;
-
-	if (!stack || !*stack || !(*stack)->next)
-		return ;
-	second_last = *stack;
-	while (second_last->next->next != NULL)
-		second_last = second_last->next;
-	last = second_last->next;
-	last->next = *stack;
-	*stack = last;
-	second_last->next = NULL;
-	return ;
-}
-
-void	rra(t_node **stack_a)
-{
-	reverserotate(stack_a);
-	write(1, "rra\n", 4);
-	return ;
-}
-
-void	rrb(t_node **stack_b)
-{
-	reverserotate(stack_b);
-	write(1, "rrb\n", 4);
-	return ;
-}
-
-void	rrr(t_node **stack_a, t_node **stack_b)
-{
-	reverserotate(stack_a);
-	reverserotate(stack_b);
-	write(1, "rrr\n", 4);
-	return ;
-}
-
-void	swap(t_node **stack)
-{
-	t_node	*first;
-	t_node	*second;
-
-	if (!stack || !*stack || !(*stack)->next)
-		return ;
-	first = *stack;
-	second = first->next;
-	first->next = second->next;
-	second->next = first;
-	*stack = second;
-	/*while (*stack != NULL)
-	{
-		printf("%d\n", (*stack)->value);
-		*stack = (*stack)->next;
-	}*/
-	return ;
-}
-
-void	sa(t_node **stack_a)
-{
-	swap(stack_a);
-	write(1, "sa\n", 3);
-	return ;
-}
-
-void	sb(t_node **stack_b)
-{
-	swap(stack_b);
-	write(1, "sb\n", 3);
-	return ;
-}
-
-void	ss(t_node **stack_a, t_node **stack_b)
-{
-	swap(stack_a);
-	swap(stack_b);
-	write(1, "ss\n", 3);
-	return ;
-}
-
-void	push(t_node **src, t_node **dest)
-{
-	t_node	*temp;
-
-	if (!src || !*src)
-		return ;
-	temp = *src;
-	*src = (*src)->next;
-	temp->next = *dest;
-	*dest = temp;
-	return ;
-}
-
-void	pa(t_node **stack_a, t_node **stack_b)
-{
-	push(stack_b, stack_a);
-	write(1, "pa\n", 3);
-	return ;
-}
-
-void	pb(t_node **stack_a, t_node **stack_b)
-{
-	push(stack_a, stack_b);
-	write(1, "pb\n", 3);
-	return ;
-}
-
-unsigned int	bit_counterf(t_node **stack_a)
-{
-	t_node			*current;
-	unsigned int	count;
-	int				max_index;
-
-	if (!stack_a || !*stack_a || !(*stack_a)->next)
-		return (0);
-	current = *stack_a;
-	count = 0;
-	max_index = 0;
-	while (current != NULL)
-	{
-		if (current->index > max_index)
-			max_index = current->index;
-		current = current->next;
-	}
-	while ((max_index >> count) != 0)
-		count++;
-	return (count);
-}
-
-unsigned int	ft_lstsize2(t_node *lst)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (lst != NULL)
-	{
-		lst = lst->next;
-		i++;
-	}
-	return (i);
-}
 /*void	testprint (t_node **stack_a)
 {
 	t_node	*current;
@@ -350,34 +67,7 @@ unsigned int	ft_lstsize2(t_node *lst)
 	}
 }*/
 
-void	complex(t_node **stack_a, t_node **stack_b)
-{
-	t_node			*current;
-	unsigned int	nonodes;
-	unsigned int	size;
-	unsigned int	bit_increment;
 
-	bit_increment = 0;
-	nonodes = ft_lstsize2(*stack_a);
-	while (bit_increment < bit_counterf(stack_a))
-	{
-		size = 0;
-		if (is_sorted (*stack_a) == 0)
-			break ;
-		while (size < nonodes)
-		{
-			current = *stack_a;
-			if (((current->index >> bit_increment) & 1) == 1)
-				ra(stack_a);
-			else
-				pb (stack_a, stack_b);
-			size++;
-		}
-		while (*stack_b != NULL)
-			pa (stack_a, stack_b);
-		bit_increment++;
-	}
-}
 
 void	assigner(t_node **stack_a, float j, int mode)
 {
@@ -390,147 +80,19 @@ void	assigner(t_node **stack_a, float j, int mode)
 	{
 		if (mode == 1)
 			simple(stack_a, &stack_b);
-		/*else if (mode == 2)
-			medium(stack_a, &stack_b);*/
+		else if (mode == 2)
+			medium(stack_a, &stack_b);
 		else if (mode == 3)
 			complex(stack_a, &stack_b);
-		return ;
 	}
 	if (size <= 5 && mode == 0)
 		limit_five(stack_a, size);
 	else if (j < 0.2 && mode == 0)
 		simple(stack_a, &stack_b);
-	/*else if (j >= 0.2 && j < 0.5 && mode == 0)
-		medium(stack_a, &stack_b);*/
+	else if (j >= 0.2 && j < 0.5 && mode == 0)
+		medium(stack_a, &stack_b);
 	else if (j >= 0.5 && mode == 0)
 		complex(stack_a, &stack_b);
-}
-
-void	index_creator(t_node **stack, float j, int mode)
-{
-	t_node	*temp;
-	t_node	*current;
-	t_node	*start;
-
-	if (!stack || !(*stack)->next || j == 0.0)
-		return ;
-	start = *stack;
-	current = *stack;
-	while (current)
-	{
-		temp = start;
-		while (temp)
-		{
-			if (current->value > temp->value)
-				++current->index;
-			temp = temp->next;
-		}
-		current = current->next;
-	}
-	assigner(stack, j, mode);
-	return ;
-}
-
-void	error_checkerfreer(char **ans, t_node *stack_a)
-{
-	write (2, "Error\n", 6);
-	freesplit(ans);
-	freestack(&stack_a);
-	return ;
-}
-
-t_node	*helper_nodecreator(char **ans)
-{
-	int		k;
-	t_node	*stack_a;
-	t_node	*new_node;
-
-	k = 0;
-	stack_a = NULL;
-	new_node = NULL;
-	if (ans[0] != NULL && ans[0][0] == '-' && ans[0][1] == '-')
-		k = 1;
-	while (ans[k] != NULL)
-	{
-		if (num_checker(ans[k]) == 1) //checks for numbers only
-		{
-			error_checkerfreer (ans, stack_a);
-			exit (0);
-		}
-		new_node = create_node(ft_atoi(ans[k]));
-		add_node_back(&stack_a, new_node);
-		k++;
-	}
-	return (stack_a);
-}
-
-void	error_checkercont2(char **ans, int mode)
-{
-	float	j;
-	t_node	*stack_a;
-
-	j = 0.0;
-	stack_a = helper_nodecreator (ans);
-	if (num_checker2(&stack_a) == 1)
-	{
-		error_checkerfreer (ans, stack_a);
-		return ;
-	}
-	//check for repeating numbers
-	if (is_sorted(stack_a) == 0)
-	{
-		freesplit(ans);
-		freestack(&stack_a);
-		exit (0);
-	}
-	//checks if the inputs are already sorted.
-	//here u can then pass to the algo part.
-	j = disorder_calculator(stack_a);
-	index_creator(&stack_a, j, mode);
-	//printf("%f\n", j);
-	/*current = stack_a;
-	while (current != NULL)
-	{
-		printf("%d\n", current->value);
-		current = current->next;
-	}*/
-	freesplit(ans);
-	freestack(&stack_a);
-	return ;
-}
-
-void	error_checkercont(char *strjoin)
-{
-	char	**ans;
-	int		mode;
-
-	mode = 0;
-	ans = ft_split(strjoin, ' ');//split it into a 2D array.
-	free (strjoin);
-	if (ans[0] != NULL && ans[0][0] == '-' && ans[0][1] == '-')
-	{
-		if (ft_strncmp(ans[0], "--simple", 9) == 0)
-			mode = 1;
-		else if (ft_strncmp(ans[0], "--medium", 9) == 0)
-			mode = 2;
-		else if (ft_strncmp(ans[0], "--complex", 10) == 0)
-			mode = 3;
-		else if (ft_strncmp(ans[0], "--adaptive", 11) == 0)
-			mode = 0;
-		else
-		{
-			freesplit(ans);
-			return ;
-		}
-	}
-	error_checkercont2 (ans, mode);
-	return ;
-}
-
-void	helper_error_checker(char *strjoin)
-{
-	free(strjoin);
-	write(1, "Error\n", 6);
 }
 
 void	error_checker(int argc, char **argv)
@@ -553,12 +115,11 @@ void	error_checker(int argc, char **argv)
 		strjoin = temp2;
 		i++;
 	}
-	if (num_checker(strjoin) == 0)
-		error_checkercont (strjoin);
+	error_checkercont (strjoin);
 	//joins the inputs into one string
 	//free(temp2);
-	else
-		helper_error_checker(strjoin);
+	/*else
+		helper_error_checker(strjoin);*/
 }
 
 int	main(int argc, char *argv[])
