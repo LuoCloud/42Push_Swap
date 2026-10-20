@@ -27,15 +27,21 @@ void	push(t_node **src, t_node **dest)
 
 void	pa(t_node **stack_a, t_node **stack_b)
 {
+	t_bench	*bench;
+
 	push(stack_b, stack_a);
 	write(1, "pa\n", 3);
+	bench->pa++;
 	return ;
 }
 
 void	pb(t_node **stack_a, t_node **stack_b)
 {
+	t_bench	*bench;
+
 	push(stack_a, stack_b);
 	write(1, "pb\n", 3);
+	bench->pb++;
 	return ;
 }
 

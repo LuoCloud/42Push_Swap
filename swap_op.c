@@ -17,7 +17,7 @@ void	swap(t_node **stack)
 	t_node	*first;
 	t_node	*second;
 
-	if(!stack || !*stack || !(*stack)->next)
+	if (!stack || !*stack || !(*stack)->next)
 		return ;
 	first = *stack;
 	second = first->next;
@@ -34,22 +34,31 @@ void	swap(t_node **stack)
 
 void	sa(t_node **stack_a)
 {
+	t_bench	*bench;
+
 	swap(stack_a);
 	write(1, "sa\n", 3);
+	bench->sa++;
 	return ;
 }
 
 void	sb(t_node **stack_b)
 {
+	t_bench	*bench;
+
 	swap(stack_b);
 	write(1, "sb\n", 3);
+	bench->sb++;
 	return ;
 }
 
 void	ss(t_node **stack_a, t_node **stack_b)
 {
+	t_bench	*bench;
+
 	swap(stack_a);
 	swap(stack_b);
 	write(1, "ss\n", 3);
+	bench->ss++;
 	return ;
 }

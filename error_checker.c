@@ -72,6 +72,8 @@ void	error_checkercont(char *strjoin)
 			error_checkercont2 (ans, 3, 1);
 		else if (ft_strncmp(ans[0], "--adaptive", 11) == 0)
 			error_checkercont2 (ans, 0, 1);
+		else if (ft_strncmp(ans[0], "--bench", 8) == 0)
+			error_checkercont2 (ans, 0, 1);
 		else
 		{
 			write(2, "Error\n", 6);
