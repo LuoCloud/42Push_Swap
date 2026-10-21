@@ -29,30 +29,24 @@ void	rotate(t_node **stack)
 	return ;
 }
 
-void	ra(t_node **stack_a)
+void	ra(t_node **stack_a, t_bench *bench)
 {
-	t_bench	*bench;
-
 	rotate(stack_a);
 	write(1, "ra\n", 3);
 	bench->ra++;
 	return ;
 }
 
-void	rb(t_node **stack_b)
+void	rb(t_node **stack_b, t_bench *bench)
 {
-	t_bench	*bench;
-
 	rotate(stack_b);
 	write(1, "rb\n", 3);
 	bench->rb++;
 	return ;
 }
 
-void	rr(t_node **stack_a, t_node **stack_b)
+void	rr(t_node **stack_a, t_node **stack_b, t_bench *bench)
 {
-	t_bench	*bench;
-
 	rotate(stack_a);
 	rotate(stack_b);
 	write(1, "rr\n", 3);

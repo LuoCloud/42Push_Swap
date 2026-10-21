@@ -36,6 +36,12 @@ typedef struct s_bench
 	int	pb;
 }	t_bench;
 
+typedef struct s_bench_info
+{
+	t_node	**a;
+	t_node	**b;
+	t_bench	*bench;
+}	s_bench_info;
 
 // Utils //
 t_node			*create_node(int value);
@@ -48,26 +54,27 @@ long			ft_atoi2(const char *str);
 
 // Operations //
 void			rotate(t_node **stack);
-void			ra(t_node **stack_a);
-void			rb(t_node **stack_b);
-void			rr(t_node **stack_a, t_node **stack_b);
+void			ra(t_node **stack_a, t_bench *bench);
+void			rb(t_node **stack_b, t_bench *bench);
+void			rr(t_node **stack_a, t_node **stack_b, t_bench *bench);
 void			reverserotate(t_node **stack);
-void			rra(t_node **stack_a);
-void			rrb(t_node **stack_b);
-void			rrr(t_node **stack_a, t_node **stack_b);
+void			rra(t_node **stack_a, t_bench *bench);
+void			rrb(t_node **stack_b, t_bench *bench);
+void			rrr(t_node **stack_a, t_node **stack_b, t_bench *bench);
 void			swap(t_node **stack);
-void			sa(t_node **stack_a);
-void			sb(t_node **stack_b);
-void			ss(t_node **stack_a, t_node **stack_b);
+void			sa(t_node **stack_a, t_bench *bench);
+void			sb(t_node **stack_b, t_bench *bench);
+void			ss(t_node **stack_a, t_node **stack_b, t_bench *bench);
 void			push(t_node **src, t_node **dest);
-void			pa(t_node **stack_a, t_node **stack_b);
-void		 	pb(t_node **stack_a, t_node **stack_b);
+void			pa(t_node **stack_a, t_node **stack_b, t_bench *bench);
+void		 	pb(t_node **stack_a, t_node **stack_b, t_bench *bench);
 
 // Error Checker //
 void			error_checker(int argc, char **argv);
 void			error_checkercont(char *strjoin);
 void			error_checkercont2(char **ans, int mode, int k);
 void			helper_error_checker(char *strjoin);
+void			error_checkerfreer(char **ans, t_node *stack_a);
 
 // Num Checker //
 int				num_checker(char *str);

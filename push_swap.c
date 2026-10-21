@@ -72,10 +72,12 @@ void	assigner(t_node **stack_a, float j, int mode)
 			medium(stack_a, &stack_b);
 		else if (mode == 3)
 			complex(stack_a, &stack_b);
-		else if (mode == 4)
+		/*else if (mode == 4)
+		{
 			bench_algo(stack_a, &stack_b);
 			bench_op(stack_a, &stack_b);
-			bench_dis();
+			bench_dis(stack_a, &stack_b);
+		}*/
 	}
 	if (size <= 5 && mode == 0)
 		limit_five(stack_a, size);
