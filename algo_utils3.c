@@ -70,3 +70,14 @@ long	ft_atoi2(const char *str)
 	}
 	return ((int)(l * j));
 }
+
+void	print_bench(t_bench *bench)
+{
+	if (!bench->enabled)
+		return;
+	print_disorder(bench);
+	print_algo(bench);
+	print_total(bench);
+	print_pushswap(bench);
+	print_rotate(bench);
+}

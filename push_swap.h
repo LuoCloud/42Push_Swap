@@ -10,9 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include "libft.h"
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
+# define ALGO_SIMPLE 1
+# define ALGO_MEDIUM 2
+# define ALGO_COMPLEX 3
+# define ALGO_ADAPT 4
+# include <unistd.h>
+# include <stdlib.h>
+# include "libft.h"
 
 typedef struct s_node
 {
@@ -23,17 +29,20 @@ typedef struct s_node
 
 typedef struct s_bench
 {
-	int	ra;
-	int	rb;
-	int	rr;
-	int	rra;
-	int	rrb;
-	int	rrr;
-	int	sa;
-	int	sb;
-	int	ss;
-	int	pa;
-	int	pb;
+	float	disorder;
+	int		algo;
+	int		enabled;
+	int		ra;
+	int		rb;
+	int		rr;
+	int		rra;
+	int		rrb;
+	int		rrr;
+	int		sa;
+	int		sb;
+	int		ss;
+	int		pa;
+	int		pb;
 }	t_bench;
 
 typedef struct s_bench_info
@@ -70,9 +79,9 @@ void			pa(t_node **stack_a, t_node **stack_b, t_bench *bench);
 void		 	pb(t_node **stack_a, t_node **stack_b, t_bench *bench);
 
 // Error Checker //
-void			error_checker(int argc, char **argv);
-void			error_checkercont(char *strjoin);
-void			error_checkercont2(char **ans, int mode, int k);
+void			error_checker(int argc, char **argv, t_bench bench);
+void			error_checkercont(char *strjoin. t_bench *bench);
+void			error_checkercont2(char **ans, int mode, int k, t_bench *bench);
 void			helper_error_checker(char *strjoin);
 void			error_checkerfreer(char **ans, t_node *stack_a);
 
@@ -80,25 +89,34 @@ void			error_checkerfreer(char **ans, t_node *stack_a);
 int				num_checker(char *str);
 int				num_checker2(t_node **ans);
 
+// Benchmark //
+void			print_algo(t_bench *bench);
+void    		print_disorder(t_bench *bench);
+void    		print_pushswap(t_bench *bench);
+void    		print_rotate(t_bench *bench);
+void    		print_total(t_bench *bench);
+void			print_bench(t_bench *bench);
+
+
 // Small Algorithm //
-int				limit_five(t_node **stack_a, int  limit);
+int				limit_five(t_node **stack_a, int  limit, t_bench *bench);
 
 // Simple Algorithm //
-void			simple(t_node **stack_a, t_node **stack_b);
+void			simple(t_node **stack_a, t_node **stack_b, t_bench *bench);
 void			move_to_top(t_node **stack_a, int pos, int size);
 int				find_min(t_node *stack_a, int size);
 
 // Medium Algorithm //
-void 			medium(t_node **stack_a, t_node **stack_b);
+void 			medium(t_node **stack_a, t_node **stack_b, t_bench *bench);
 int				bucket_count(int size);
 int				find_rank_pos(t_node *stack, int rank);
 
 // Complex Algorithm //
-void			complex(t_node **stack_a, t_node **stack_b);
+void			complex(t_node **stack_a, t_node **stack_b, t_bench *bench);
 int				is_sorted(t_node *stack_a);
 unsigned int	bit_counterf(t_node **stack_a);
 
 // Main //
-void			index_creator(t_node **stack, float j, int mode);
+void			index_creator(t_node **stack, float j, int mode, t_bench *bench);
 void		 	assigner(t_node **stack_a, float j, int mode);
 float			disorder_calculator(t_node *stack);

@@ -72,21 +72,15 @@ void	assigner(t_node **stack_a, float j, int mode)
 			medium(stack_a, &stack_b);
 		else if (mode == 3)
 			complex(stack_a, &stack_b);
-		/*else if (mode == 4)
-		{
-			bench_algo(stack_a, &stack_b);
-			bench_op(stack_a, &stack_b);
-			bench_dis(stack_a, &stack_b);
-		}*/
 	}
 	if (size <= 5 && mode == 0)
-		limit_five(stack_a, size);
+		limit_five(stack_a, size, bench);
 	else if (j < 0.2 && mode == 0)
-		simple(stack_a, &stack_b);
+		simple(stack_a, &stack_b, bench);
 	else if (j >= 0.2 && j < 0.5 && mode == 0)
-		medium(stack_a, &stack_b);
+		medium(stack_a, &stack_b, bench);
 	else if (j >= 0.5 && mode == 0)
-		complex(stack_a, &stack_b);
+		complex(stack_a, &stack_b, bench);
 }
 
 void	error_checker(int argc, char **argv)
@@ -118,7 +112,10 @@ void	error_checker(int argc, char **argv)
 
 int	main(int argc, char *argv[])
 {
+	t_bench	bench;
+
+	ft_bzero(&bench, sizeof(t_bench));
 	if (argc >= 2)
-		error_checker(argc, argv);
+		error_checker(argc, argv, &bench);
 	return (0);
 }

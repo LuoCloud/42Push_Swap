@@ -16,7 +16,7 @@ void	push(t_node **src, t_node **dest)
 {
 	t_node	*temp;
 
-	if (!src || !*src || !(*src)->next)
+	if (!src || !*src)
 		return ;
 	temp = *src;
 	*src = (*src)->next;

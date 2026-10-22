@@ -21,9 +21,9 @@ void	swap(t_node **stack)
 		return ;
 	first = *stack;
 	second = first->next;
-	first = second->next;
+	first->next = second->next;
 	second->next = first;
-	second = *stack;
+	*stack = second;
 	/*while (*stack != NULL)
 	{
 		printf("%d\n", (*stack)->value);
