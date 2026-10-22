@@ -12,11 +12,11 @@
 
 #include "push_swap.h"
 
-unsigned int	bit_counterf (t_node **stack_a)
+unsigned int	bit_counterf(t_node **stack_a)
 {
-	t_node	*current;
-	unsigned int count;
-	int	max_index;
+	t_node			*current;
+	unsigned int	count;
+	int				max_index;
 
 	if (!stack_a || !*stack_a || !(*stack_a)->next)
 		return (0);
@@ -34,7 +34,6 @@ unsigned int	bit_counterf (t_node **stack_a)
 	return (count);
 }
 
-
 int	is_sorted(t_node *stack_a)
 {
 	if (!stack_a)
@@ -48,7 +47,7 @@ int	is_sorted(t_node *stack_a)
 	return (0);
 }
 
-void	complex(t_node **stack_a, t_node **stack_b)
+void	complex(t_node **stack_a, t_node **stack_b, t_bench *bench)
 {
 	t_node			*current;
 	unsigned int	nonodes;
@@ -66,13 +65,13 @@ void	complex(t_node **stack_a, t_node **stack_b)
 		{
 			current = *stack_a;
 			if (((current->index >> bit_increment) & 1) == 1)
-				ra(stack_a);
+				ra(stack_a, bench);
 			else
-				pb (stack_a, stack_b);
+				pb (stack_a, stack_b, bench);
 			size++;
 		}
 		while (*stack_b != NULL)
-			pa (stack_a, stack_b);
+			pa (stack_a, stack_b, bench);
 		bit_increment++;
 	}
 }

@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "push_swap.h"
-
 
 float	disorder_calculator(t_node *stack)
 {
@@ -57,7 +55,7 @@ float	disorder_calculator(t_node *stack)
 
 
 
-void	assigner(t_node **stack_a, float j, int mode)
+void	assigner(t_node **stack_a, float j, int mode, t_bench* bench)
 {
 	t_node	*stack_b;
 	int		size;
@@ -67,11 +65,11 @@ void	assigner(t_node **stack_a, float j, int mode)
 	if (mode >= 1 && mode <= 3)
 	{
 		if (mode == 1)
-			simple(stack_a, &stack_b);
+			simple(stack_a, &stack_b, bench);
 		else if (mode == 2)
-			medium(stack_a, &stack_b);
+			medium(stack_a, &stack_b, bench);
 		else if (mode == 3)
-			complex(stack_a, &stack_b);
+			complex(stack_a, &stack_b, bench);
 	}
 	if (size <= 5 && mode == 0)
 		limit_five(stack_a, size, bench);
@@ -83,7 +81,7 @@ void	assigner(t_node **stack_a, float j, int mode)
 		complex(stack_a, &stack_b, bench);
 }
 
-void	error_checker(int argc, char **argv)
+void	error_checker(int argc, char **argv, t_bench *bench)
 {
 	int		i;
 	char	*temp1;
@@ -103,7 +101,7 @@ void	error_checker(int argc, char **argv)
 		strjoin = temp2;
 		i++;
 	}
-	error_checkercont (strjoin);
+	error_checkercont(strjoin, bench);
 	//joins the inputs into one string
 	//free(temp2);
 	/*else

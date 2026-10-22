@@ -11,20 +11,20 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
+//#include <stdio.h>
 
-int     bucket_count(int size)
+int	bucket_count(int size)
 {
-    int root;
+	int	root;
 
-    root = 1;
-    while ((root * root) <= size)
-        root++;
-    root--;
-    root = root / 2;
-    if (root < 1)
-        root = 1;
-    return(root);
+	root = 1;
+	while ((root * root) <= size)
+		root++;
+	root--;
+	root = root / 2;
+	if (root < 1)
+		root = 1;
+	return (root);
 }
 
 int find_rank_pos(t_node *stack, int rank)
@@ -42,7 +42,7 @@ int find_rank_pos(t_node *stack, int rank)
     return (-1);
 }
 
-void	index_creator(t_node **stack, float j, int mode)
+void	index_creator(t_node **stack, float j, int mode, t_bench *bench)
 {
 	t_node	*temp;
 	t_node	*current;
@@ -63,6 +63,6 @@ void	index_creator(t_node **stack, float j, int mode)
 		}
 		current = current->next;
 	}
-	assigner(stack, j, mode);
+	assigner(stack, j, mode, bench);
 	return ;
 }

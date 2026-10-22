@@ -1,25 +1,27 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: wli-ting <wli-ting@student.42kl.edu.m      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/10/11 16:20:28 by wli-ting          #+#    #+#              #
-#    Updated: 2026/10/11 16:46:15 by wli-ting         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = push_swap
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Ilibft
+CFLAGS = -Wall -Wextra -Werror
 
-SRCS = 	push_swap.c \
+SRCS = ft_split.c \
+	ft_strjoin.c \
+	ft_strlen.c \
+	ft_strdup.c\
+	ft_calloc.c\
+	push_swap.c \
 	algo_small.c\
 	algo_simple.c \
 	algo_medium.c \
 	algo_utils.c \
-	operations.c \
+	algo_utils2.c \
+	algo_utils3.c \
+	algo_complex.c \
+	error_checker.c \
+	num_checker.c \
+	push_op.c \
+	r_rotate_op.c \
+	rotate_op.c \
+	swap_op.c \
+	bench_utils.c \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -34,9 +36,6 @@ $(LIBFT):
 # This rule takes your compiled objects and the libft.a, and links them into an executable
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
-
-%.o: %.c push_swap.h
-	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)

@@ -50,7 +50,7 @@ typedef struct s_bench_info
 	t_node	**a;
 	t_node	**b;
 	t_bench	*bench;
-}	s_bench_info;
+}	t_bench_info;
 
 // Utils //
 t_node			*create_node(int value);
@@ -79,11 +79,12 @@ void			pa(t_node **stack_a, t_node **stack_b, t_bench *bench);
 void		 	pb(t_node **stack_a, t_node **stack_b, t_bench *bench);
 
 // Error Checker //
-void			error_checker(int argc, char **argv, t_bench bench);
-void			error_checkercont(char *strjoin. t_bench *bench);
+void			error_checker(int argc, char **argv, t_bench *bench);
+void			error_checkercont(char *strjoin, t_bench *bench);
 void			error_checkercont2(char **ans, int mode, int k, t_bench *bench);
 void			helper_error_checker(char *strjoin);
 void			error_checkerfreer(char **ans, t_node *stack_a);
+static int		parse_flag(char *s, int *mode, t_bench *bench);
 
 // Num Checker //
 int				num_checker(char *str);
@@ -103,7 +104,7 @@ int				limit_five(t_node **stack_a, int  limit, t_bench *bench);
 
 // Simple Algorithm //
 void			simple(t_node **stack_a, t_node **stack_b, t_bench *bench);
-void			move_to_top(t_node **stack_a, int pos, int size);
+void			move_to_top(t_node **stack_a, int pos, int size, t_bench *bench);
 int				find_min(t_node *stack_a, int size);
 
 // Medium Algorithm //
@@ -118,5 +119,7 @@ unsigned int	bit_counterf(t_node **stack_a);
 
 // Main //
 void			index_creator(t_node **stack, float j, int mode, t_bench *bench);
-void		 	assigner(t_node **stack_a, float j, int mode);
+void		 	assigner(t_node **stack_a, float j, int mode, t_bench *bench);
 float			disorder_calculator(t_node *stack);
+
+#endif

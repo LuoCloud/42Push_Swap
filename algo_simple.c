@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algo_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wli-ting <wli-ting@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wli-ting <wli-ting@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/11 16:22:24 by wli-ting          #+#    #+#             */
-/*   Updated: 2026/10/11 16:22:37 by wli-ting         ###   ########.fr       */
+/*   Updated: 2026/10/22 23:26:50 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	find_min(t_node *list, int size)
 	return (index);
 }
 
-void	move_to_top(t_node **stack_a, int pos, int size)
+void	move_to_top(t_node **stack_a, int pos, int size, t_bench *bench)
 {
 	int	i;
 
@@ -44,7 +44,7 @@ void	move_to_top(t_node **stack_a, int pos, int size)
 	{
 		while (i < pos)
 		{
-			ra(stack_a);
+			ra(stack_a, bench);
 			i++;
 		}
 	}
@@ -52,13 +52,13 @@ void	move_to_top(t_node **stack_a, int pos, int size)
 	{
 		while (i < size - pos)
 		{
-			rra(stack_a);
+			rra(stack_a, bench);
 			i++;
 		}
 	}
 }
 
-void	simple(t_node **stack_a, t_node **stack_b)
+void	simple(t_node **stack_a, t_node **stack_b, t_bench *bench)
 {
 	int	pos;
 	int	size;
@@ -67,10 +67,10 @@ void	simple(t_node **stack_a, t_node **stack_b)
 	while (size > 0)
 	{
 		pos = find_min(*stack_a, size);
-		move_to_top(stack_a, pos, size);
-		pb(stack_a, stack_b);
+		move_to_top(stack_a, pos, size, bench);
+		pb(stack_a, stack_b, bench);
 		size--;
 	}
 	while (*stack_b != NULL)
-		pa(stack_a, stack_b);
+		pa(stack_a, stack_b, bench);
 }
