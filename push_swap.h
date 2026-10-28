@@ -43,6 +43,8 @@ typedef struct s_bench
 	int		ss;
 	int		pa;
 	int		pb;
+	int		silent;
+	int		picked;
 }	t_bench;
 
 typedef struct s_bench_info
@@ -50,6 +52,7 @@ typedef struct s_bench_info
 	t_node	**a;
 	t_node	**b;
 	t_bench	*bench;
+	int		pend;
 }	t_bench_info;
 
 // Utils //
@@ -75,6 +78,7 @@ void			sa(t_node **stack_a, t_bench *bench);
 void			sb(t_node **stack_b, t_bench *bench);
 void			ss(t_node **stack_a, t_node **stack_b, t_bench *bench);
 void			push(t_node **src, t_node **dest);
+void			emit(t_bench *bench, char *op, int len);
 void			pa(t_node **stack_a, t_node **stack_b, t_bench *bench);
 void		 	pb(t_node **stack_a, t_node **stack_b, t_bench *bench);
 
@@ -84,11 +88,11 @@ void			error_checkercont(char *strjoin, t_bench *bench);
 void			error_checkercont2(char **ans, int mode, int k, t_bench *bench);
 void			helper_error_checker(char *strjoin);
 void			error_checkerfreer(char **ans, t_node *stack_a);
-static int		parse_flag(char *s, int *mode, t_bench *bench);
 
 // Num Checker //
 int				num_checker(char *str);
 int				num_checker2(t_node **ans);
+int				has_blank_arg(int argc, char **argv);
 
 // Benchmark //
 void			print_algo(t_bench *bench);
@@ -109,8 +113,18 @@ int				find_min(t_node *stack_a, int size);
 
 // Medium Algorithm //
 void 			medium(t_node **stack_a, t_node **stack_b, t_bench *bench);
-int				bucket_count(int size);
 int				find_rank_pos(t_node *stack, int rank);
+int				chunk_base(int size);
+int				best_chunk(t_node *a, int n);
+int				chunk_cost(t_node *a, int n, int k);
+void			chunk_push(t_bench_info *info, int n, int k);
+void			chunk_pull(t_bench_info *info, int n);
+void			flush_pend(t_bench_info *info);
+void			rotate_to_chunk(t_bench_info *info, int hi);
+void			rotate_b_to_top(t_node **b, int pos, int size, t_bench *bench);
+int				pull_next(t_bench_info *info, int nxt);
+t_node			*clone_stack(t_node *src);
+int				bench_total(t_bench *bench);
 
 // Complex Algorithm //
 void			complex(t_node **stack_a, t_node **stack_b, t_bench *bench);

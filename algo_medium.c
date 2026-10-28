@@ -10,93 +10,54 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "push_swap.h"
 
-static void	sort_bucket(t_node **a, t_node **b, int lower, int upper, t_bench *bench);
-static void	distribute_bucket(t_node **a, t_node **b, int lower, int upper, t_bench *bench);
-static void	rotate_b_to_top(t_node **b, int pos, int size, t_bench *bench);
-static void	move_rank_a(t_node **a, t_node **b, int rank, t_bench *bench);
-
-static void	distribute_bucket(t_bench_info *info, int lower, int upper)
+void	chunk_push(t_bench_info *info, int n, int k)
 {
 	int	size;
+	int	pushed;
+	int	hi;
+	int	v;
 
-	size = ft_lstsize2(*info->a);
-	while (size > 0)
+	size = (n + k - 1) / k;
+	pushed = 0;
+	info->pend = 0;
+	while (*info->a)
 	{
-		if ((*info->a)->index >= lower && (*info->a)->index < upper)
-			pb(info->a, info->b, info->bench);
-		else
-			ra(info->a, info->bench);
-		size--;
+		hi = pushed + size;
+		if (hi > n)
+			hi = n;
+		rotate_to_chunk(info, hi);
+		v = (*info->a)->index;
+		pb(info->a, info->b, info->bench);
+		pushed++;
+		if (v < hi - size)
+			info->pend = 1;
 	}
+	flush_pend(info);
 }
 
-static void	rotate_b_to_top(t_node **b, int pos, int size, t_bench *bench)
+void	chunk_pull(t_bench_info *info, int n)
 {
-	if (pos <= size / 2)
-	{
-		while (pos > 0)
-		{
-			rb(b, bench);
-			pos--;
-		}
-	}
-	else
-	{
-		pos = size - pos;
-		while (pos > 0)
-		{
-			rrb(b, bench);
-			pos--;
-		}
-	}
-}
+	int	nxt;
 
-static void	move_rank_a(t_node **a, t_node **b, int rank, t_bench *bench)
-{
-	int	pos;
-
-	pos = find_rank_pos(*b, rank);
-	if (pos < 0)
-		return ;
-	rotate_b_to_top(b, pos, ft_lstsize2(*b), bench);
-	pa(a, b, bench);
-}
-
-static void	sort_bucket(t_bench_info *info, int lower, int upper)
-{
-	int	rank;
-
-	rank = upper - 1;
-	while (rank >= lower)
-	{
-		move_rank_a(info->a, info->b, rank, info->bench);
-		rank--;
-	}
+	nxt = n - 1;
+	while (*info->b)
+		nxt = pull_next(info, nxt);
 }
 
 void	medium(t_node **a, t_node **b, t_bench *bench)
 {
 	t_bench_info	info;
-	int	size;
-	int	bucket;
-	int	upper;
-	int	lower;
+	int				n;
+	int				k;
 
+	n = ft_lstsize2(*a);
+	k = best_chunk(*a, n);
 	info.a = a;
 	info.b = b;
 	info.bench = bench;
-	size = ft_lstsize2(*a);
-	bucket = (size + bucket_count(size) - 1) / bucket_count(size);
-	upper = size;
-	while (upper > 0)
-	{
-		lower = upper - bucket;
-		if (lower < 0)
-			lower = 0;
-		distribute_bucket(&info, lower, upper, bench);
-		sort_bucket(&info, lower, upper, bench);
-		upper = lower;
-	}
+	chunk_push(&info, n, k);
+	chunk_pull(&info, n);
 }

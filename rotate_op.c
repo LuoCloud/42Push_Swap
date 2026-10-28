@@ -32,7 +32,7 @@ void	rotate(t_node **stack)
 void	ra(t_node **stack_a, t_bench *bench)
 {
 	rotate(stack_a);
-	write(1, "ra\n", 3);
+	emit(bench, "ra\n", 3);
 	bench->ra++;
 	return ;
 }
@@ -40,7 +40,7 @@ void	ra(t_node **stack_a, t_bench *bench)
 void	rb(t_node **stack_b, t_bench *bench)
 {
 	rotate(stack_b);
-	write(1, "rb\n", 3);
+	emit(bench, "rb\n", 3);
 	bench->rb++;
 	return ;
 }
@@ -49,7 +49,7 @@ void	rr(t_node **stack_a, t_node **stack_b, t_bench *bench)
 {
 	rotate(stack_a);
 	rotate(stack_b);
-	write(1, "rr\n", 3);
+	emit(bench, "rr\n", 3);
 	bench->rr++;
 	return ;
 }

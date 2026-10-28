@@ -56,7 +56,7 @@ t_node	*helper_nodecreator(char **ans, int start_index)
 	{
 		if (num_checker(ans[k]) == 1) //checks for numbers only
 		{
-			error_checkerfreer (ans, stack_a);
+			error_checkerfreer(ans, stack_a);
 			exit (0);
 		}
 		if (ft_atoi2(ans[k]) == 3000000000)
