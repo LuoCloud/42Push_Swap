@@ -6,7 +6,7 @@
 /*   By: wli-ting <wli-ting@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/13 14:37:35 by wli-ting          #+#    #+#             */
-/*   Updated: 2026/10/13 14:37:35 by wli-ting         ###   ########.fr       */
+/*   Updated: 2026/11/02 21:57:35 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	error_checkerfreer(char **ans, t_node *stack_a)
 	freestack(&stack_a);
 	return ;
 }
-
 
 void	error_checkercont2(char **ans, int mode, int k, t_bench *bench)
 {

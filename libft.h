@@ -6,7 +6,7 @@
 /*   By: wli-ting <wli-ting@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/27 14:52:18 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/10/22 18:03:48 by wli-ting         ###   ########.fr       */
+/*   Updated: 2026/11/02 21:58:15 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define LIBFT_H
 # include <unistd.h>
 # include <stdlib.h>
-
-
 
 typedef struct s_list
 {

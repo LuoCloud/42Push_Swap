@@ -6,7 +6,7 @@
 /*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 00:20:07 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/10/13 14:37:51 by wli-ting         ###   ########.fr       */
+/*   Updated: 2026/11/02 21:54:15 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void			sb(t_node **stack_b, t_bench *bench);
 void			ss(t_node **stack_a, t_node **stack_b, t_bench *bench);
 void			push(t_node **src, t_node **dest);
 void			pa(t_node **stack_a, t_node **stack_b, t_bench *bench);
-void		 	pb(t_node **stack_a, t_node **stack_b, t_bench *bench);
+void			pb(t_node **stack_a, t_node **stack_b, t_bench *bench);
 
 // Error Checker //
 void			error_checker(int argc, char **argv, t_bench *bench);
@@ -91,23 +91,23 @@ int				num_checker2(t_node **ans);
 
 // Benchmark //
 void			print_algo(t_bench *bench);
-void    		print_disorder(t_bench *bench);
-void    		print_pushswap(t_bench *bench);
-void    		print_rotate(t_bench *bench);
-void    		print_total(t_bench *bench);
+void			print_disorder(t_bench *bench);
+void			print_pushswap(t_bench *bench);
+void			print_rotate(t_bench *bench);
+void			print_total(t_bench *bench);
 void			print_bench(t_bench *bench);
 
-
 // Small Algorithm //
-int				limit_five(t_node **stack_a, int  limit, t_bench *bench);
+int				limit_five(t_node **stack_a, int limit, t_bench *bench);
 
 // Simple Algorithm //
 void			simple(t_node **stack_a, t_node **stack_b, t_bench *bench);
-void			move_to_top(t_node **stack_a, int pos, int size, t_bench *bench);
+void			move_to_top(t_node **stack_a, int pos, int size,
+					t_bench *bench);
 int				find_min(t_node *stack_a, int size);
 
 // Medium Algorithm //
-void 			medium(t_node **stack_a, t_node **stack_b, t_bench *bench);
+void			medium(t_node **stack_a, t_node **stack_b, t_bench *bench);
 int				bucket_count(int size);
 int				find_rank_pos(t_node *stack, int rank);
 
@@ -117,8 +117,10 @@ int				is_sorted(t_node *stack_a);
 unsigned int	bit_counterf(t_node **stack_a);
 
 // Main //
-void			index_creator(t_node **stack, float j, int mode, t_bench *bench);
-void		 	assigner(t_node **stack_a, float j, int mode, t_bench *bench);
+void			index_creator(t_node **stack, float j, int mode,
+					t_bench *bench);
+void			assigner(t_node **stack_a, float j, int mode,
+					t_bench *bench);
 float			disorder_calculator(t_node *stack);
 
 #endif

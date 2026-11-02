@@ -6,7 +6,7 @@
 /*   By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 00:19:55 by cchien-s          #+#    #+#             */
-/*   Updated: 2026/10/13 14:37:51 by wli-ting         ###   ########.fr       */
+/*   Updated: 2026/11/02 22:00:12 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ float	disorder_calculator(t_node *stack)
 	return (mistakes / pairs);
 }
 
-
-
 /*void	testprint (t_node **stack_a)
 {
 	t_node	*current;
@@ -53,9 +51,7 @@ float	disorder_calculator(t_node *stack)
 	}
 }*/
 
-
-
-void	assigner(t_node **stack_a, float j, int mode, t_bench* bench)
+void	assigner(t_node **stack_a, float j, int mode, t_bench *bench)
 {
 	t_node	*stack_b;
 	int		size;

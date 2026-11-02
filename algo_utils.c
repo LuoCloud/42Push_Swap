@@ -6,7 +6,7 @@
 /*   By: wli-ting <wli-ting@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/13 14:37:12 by wli-ting          #+#    #+#             */
-/*   Updated: 2026/10/13 14:37:12 by wli-ting         ###   ########.fr       */
+/*   Updated: 2026/11/02 22:01:54 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ int	bucket_count(int size)
 	return (root);
 }
 
-int find_rank_pos(t_node *stack, int rank)
+int	find_rank_pos(t_node *stack, int rank)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (stack)
-    {
-        if (((stack)->index) == rank)
-            return (i);
-        stack = (stack)->next;
-        i++;
-    }
-    return (-1);
+	i = 0;
+	while (stack)
+	{
+		if (((stack)->index) == rank)
+			return (i);
+		stack = (stack)->next;
+		i++;
+	}
+	return (-1);
 }
 
 void	index_creator(t_node **stack, float j, int mode, t_bench *bench)

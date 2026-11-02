@@ -6,7 +6,7 @@
 /*   By: wli-ting <wli-ting@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/11 16:22:47 by wli-ting          #+#    #+#             */
-/*   Updated: 2026/10/28 16:49:53 by wli-ting         ###   ########.fr       */
+/*   Updated: 2026/11/02 21:28:15 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ static void	sort_bucket(t_bench_info *info, int lower, int upper)
 
 void	medium(t_node **a, t_node **b, t_bench *bench)
 {
+	int				size;
+	int				bucket;
+	int				upper;
+	int				lower;
 	t_bench_info	info;
-	int	size;
-	int	bucket;
-	int	upper;
-	int	lower;
 
 	info.a = a;
 	info.b = b;

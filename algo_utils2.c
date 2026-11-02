@@ -6,7 +6,7 @@
 /*   By: wli-ting <wli-ting@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/13 14:37:17 by wli-ting          #+#    #+#             */
-/*   Updated: 2026/10/13 14:37:17 by wli-ting         ###   ########.fr       */
+/*   Updated: 2026/11/02 21:55:14 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	add_node_back(t_node **stack, t_node *new_node)
 		last = last->next;
 	last->next = new_node;
 }
-
 
 t_node	*helper_nodecreator(char **ans, int start_index)
 {
