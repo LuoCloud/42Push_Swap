@@ -32,7 +32,7 @@ void	reverserotate(t_node **stack)
 void	rra(t_node **stack_a, t_bench *bench)
 {
 	reverserotate(stack_a);
-	emit(bench, "rra\n", 4);
+	write(1, "rra\n", 4);
 	bench->rra++;
 	return ;
 }
@@ -40,7 +40,7 @@ void	rra(t_node **stack_a, t_bench *bench)
 void	rrb(t_node **stack_b, t_bench *bench)
 {
 	reverserotate(stack_b);
-	emit(bench, "rrb\n", 4);
+	write(1, "rrb\n", 4);
 	bench->rrb++;
 	return ;
 }
@@ -49,7 +49,7 @@ void	rrr(t_node **stack_a, t_node **stack_b, t_bench *bench)
 {
 	reverserotate(stack_a);
 	reverserotate(stack_b);
-	emit(bench, "rrr\n", 4);
+	write(1, "rrr\n", 4);
 	bench->rrr++;
 	return ;
 }

@@ -81,34 +81,3 @@ void	print_bench(t_bench *bench)
 	print_pushswap(bench);
 	print_rotate(bench);
 }
-
-t_node	*clone_stack(t_node *src)
-{
-	t_node	*copy;
-	t_node	*node;
-
-	copy = NULL;
-	while (src)
-	{
-		node = create_node(src->value);
-		if (!node)
-		{
-			freestack(&copy);
-			return (NULL);
-		}
-		node->index = src->index;
-		add_node_back(&copy, node);
-		src = src->next;
-	}
-	return (copy);
-}
-
-int	bench_total(t_bench *bench)
-{
-	int	total;
-
-	total = bench->sa + bench->sb + bench->ss + bench->pa + bench->pb;
-	total += bench->ra + bench->rb + bench->rr;
-	total += bench->rra + bench->rrb + bench->rrr;
-	return (total);
-}

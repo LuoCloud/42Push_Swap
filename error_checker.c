@@ -12,6 +12,8 @@
 
 #include "push_swap.h"
 
+static int	parse_flag(char *s, int *mode, t_bench *bench);
+
 void	error_checkerfreer(char **ans, t_node *stack_a)
 {
 	write (2, "Error\n", 6);

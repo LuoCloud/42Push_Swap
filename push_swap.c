@@ -55,34 +55,29 @@ float	disorder_calculator(t_node *stack)
 
 
 
-static int	pick_algo(int size, float j)
-{
-	if (size > 1500 && j >= 0.2)
-		return (ALGO_COMPLEX);
-	return (ALGO_MEDIUM);
-}
-
-void	assigner(t_node **stack_a, float j, int mode, t_bench *bench)
+void	assigner(t_node **stack_a, float j, int mode, t_bench* bench)
 {
 	t_node	*stack_b;
 	int		size;
 
 	stack_b = NULL;
 	size = ft_lstsize2(*stack_a);
-	if (mode == 0 && size <= 5)
+	if (mode >= 1 && mode <= 3)
 	{
-		bench->picked = ALGO_SIMPLE;
-		limit_five(stack_a, size, bench);
-		return ;
+		if (mode == 1)
+			simple(stack_a, &stack_b, bench);
+		else if (mode == 2)
+			medium(stack_a, &stack_b, bench);
+		else if (mode == 3)
+			complex(stack_a, &stack_b, bench);
 	}
-	if (mode == 0)
-		mode = pick_algo(size, j);
-	bench->picked = mode;
-	if (mode == ALGO_SIMPLE)
+	if (size <= 5 && mode == 0)
+		limit_five(stack_a, size, bench);
+	else if (j < 0.2 && mode == 0)
 		simple(stack_a, &stack_b, bench);
-	else if (mode == ALGO_MEDIUM)
+	else if (j >= 0.2 && j < 0.5 && mode == 0)
 		medium(stack_a, &stack_b, bench);
-	else
+	else if (j >= 0.5 && mode == 0)
 		complex(stack_a, &stack_b, bench);
 }
 
@@ -118,9 +113,7 @@ int	main(int argc, char *argv[])
 	t_bench	bench;
 
 	ft_bzero(&bench, sizeof(t_bench));
-	if (argc >= 2 && has_blank_arg(argc, argv))
-		write(2, "Error\n", 6);
-	else if (argc >= 2)
+	if (argc >= 2)
 		error_checker(argc, argv, &bench);
 	return (0);
 }

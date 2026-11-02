@@ -21,12 +21,12 @@ void	print_algo(t_bench *bench)
 		ft_putstr_fd("Medium / O(n√n)", 2);
 	else if (bench->algo == ALGO_COMPLEX)
 		ft_putstr_fd("Complex / O(n log n)", 2);
-	else if (bench->picked == ALGO_MEDIUM)
-		ft_putstr_fd("Adaptive / O(n√n)", 2);
-	else if (bench->picked == ALGO_COMPLEX)
-		ft_putstr_fd("Adaptive / O(n log n)", 2);
-	else
+	else if (bench->disorder < 0.2)
 		ft_putstr_fd("Adaptive / O(n^2)", 2);
+	else if (bench->disorder < 0.5)
+		ft_putstr_fd("Adaptive / O(n√n)", 2);
+	else
+		ft_putstr_fd("Adaptive / O(n log n)", 2);
 	ft_putstr_fd("\n", 2);
 }
 
@@ -78,7 +78,12 @@ void	print_rotate(t_bench *bench)
 
 void	print_total(t_bench *bench)
 {
+	int	total;
+
+	total = bench->sa + bench->sb + bench->ss + bench->pa + bench->pb;
+	total += bench->ra + bench->rb + bench->rr;
+	total += bench->rra + bench->rrb + bench->rrr;
 	ft_putstr_fd("[bench] total_ops: ", 2);
-	ft_putnbr_fd(bench_total(bench), 2);
+	ft_putnbr_fd(total, 2);
 	ft_putstr_fd("\n", 2);
 }

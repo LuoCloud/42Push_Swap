@@ -28,7 +28,7 @@ void	push(t_node **src, t_node **dest)
 void	pa(t_node **stack_a, t_node **stack_b, t_bench *bench)
 {
 	push(stack_b, stack_a);
-	emit(bench, "pa\n", 3);
+	write(1, "pa\n", 3);
 	bench->pa++;
 	return ;
 }
@@ -36,14 +36,7 @@ void	pa(t_node **stack_a, t_node **stack_b, t_bench *bench)
 void	pb(t_node **stack_a, t_node **stack_b, t_bench *bench)
 {
 	push(stack_a, stack_b);
-	emit(bench, "pb\n", 3);
+	write(1, "pb\n", 3);
 	bench->pb++;
 	return ;
-}
-
-void	emit(t_bench *bench, char *op, int len)
-{
-	if (bench->silent)
-		return ;
-	write(1, op, len);
 }

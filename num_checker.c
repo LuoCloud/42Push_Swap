@@ -76,21 +76,3 @@ int	num_checker(char *str)
 		return (1);
 	return (0);
 }
-
-int	has_blank_arg(int argc, char **argv)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (i < argc)
-	{
-		j = 0;
-		while ((argv[i][j] >= 9 && argv[i][j] <= 13) || argv[i][j] == ' ')
-			j++;
-		if (argv[i][j] == '\0')
-			return (1);
-		i++;
-	}
-	return (0);
-}
