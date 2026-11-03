@@ -44,4 +44,17 @@ Examples:
 ```
 ARG="4 67 3 87 23"; ./push_swap --complex $ARG | ./checker_linux $ARG
 ```
-### Cautions:
+# Algorithms and Explanation
+### Simple Algorithm
+### Medium Algorithm
+### Complex Algorithm
+# Performance
+| n  |          Strategy          |  Min  | Max |  Avg   | Amount|
+| ------------|:-----------------------:|:------------------:|:---------:|:-------|:------|
+| 100      | `--simple`              |        1411      |    1614       |    1512    |    30      |
+| 100      | `--medium`              |        834      |      894     |    864    |     30     |
+| 100     | `--complex`             |      1084    |    1084       |   1084      |    30      |
+| 100   | `--adaptive` |  835|       1084    |    959       |    30      |
+| 500      | `--simple`              |        31630      |    33768       |    32699    |      30     |
+| 500      | `--medium`              |        8767      |    8996       |   8881     |     30     |
+| 500     | `--complex`             |      6784    |       6784    |    6784     |     30     |
