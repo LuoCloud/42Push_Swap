@@ -6,13 +6,11 @@
 /*   By: wli-ting <wli-ting@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/13 14:37:35 by wli-ting          #+#    #+#             */
-/*   Updated: 2026/11/02 21:57:35 by wli-ting         ###   ########.fr       */
+/*   Updated: 2026/10/13 14:37:35 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-static int	parse_flag(char *s, int *mode, t_bench *bench);
 
 void	error_checkerfreer(char **ans, t_node *stack_a)
 {
@@ -22,7 +20,8 @@ void	error_checkerfreer(char **ans, t_node *stack_a)
 	return ;
 }
 
-void	error_checkercont2(char **ans, int mode, int k, t_bench *bench)
+
+void	error_checkercont2(char **ans, int mode, int k)
 {
 	float	j;
 	t_node	*stack_a;
@@ -39,15 +38,12 @@ void	error_checkercont2(char **ans, int mode, int k, t_bench *bench)
 	{
 		freesplit(ans);
 		freestack(&stack_a);
-		print_bench(bench);
 		exit (0);
 	}
 	//checks if the inputs are already sorted.
 	//here u can then pass to the algo part.
 	j = disorder_calculator(stack_a);
-	bench->disorder = j;
-	index_creator(&stack_a, j, mode, bench);
-	print_bench(bench);
+	index_creator(&stack_a, j, mode);
 	//printf("%f\n", j);
 	/*current = stack_a;
 	while (current != NULL)
@@ -60,61 +56,31 @@ void	error_checkercont2(char **ans, int mode, int k, t_bench *bench)
 	return ;
 }
 
-static int	parse_flag(char *s, int *mode, t_bench *bench)
-{
-	if (ft_strncmp(s, "--simple", 9) == 0)
-	{
-		*mode = 1;
-		bench->algo = ALGO_SIMPLE;
-	}
-	else if (ft_strncmp(s, "--medium", 9) == 0)
-	{
-		*mode = 2;
-		bench->algo = ALGO_MEDIUM;
-	}
-	else if (ft_strncmp(s, "--complex", 10) == 0)
-	{
-		*mode = 3;
-		bench->algo = ALGO_COMPLEX;
-	}
-	else if (ft_strncmp(s, "--adaptive", 11) == 0)
-	{
-		*mode = 0;
-		bench->algo = ALGO_ADAPT;
-	}
-	else if (ft_strncmp(s, "--bench", 8) == 0)
-		bench->enabled = 1;
-	else
-		return (0);
-	return (1);
-}
-
-void	error_checkercont(char *strjoin, t_bench *bench)
+void	error_checkercont(char *strjoin)
 {
 	char	**ans;
-	int		k;
-	int		mode;
 
-	ans = ft_split(strjoin, ' ');
-	free(strjoin);
-	if (!ans)
-		return ;
-	k = 0;
-	mode = 0;
-	bench->algo = ALGO_ADAPT;
-	while (ans[k] && ans[k][0] == '-' && ans[k][1] == '-')
+	ans = ft_split(strjoin, ' ');//split it into a 2D array.
+	free (strjoin);
+	if (ans[0] != NULL && ans[0][0] == '-' && ans[0][1] == '-')
 	{
-		if (!parse_flag(ans[k], &mode, bench))
+		if (ft_strncmp(ans[0], "--simple", 9) == 0)
+			error_checkercont2 (ans, 1, 1);
+		else if (ft_strncmp(ans[0], "--medium", 9) == 0)
+			error_checkercont2 (ans, 2, 1);
+		else if (ft_strncmp(ans[0], "--complex", 10) == 0)
+			error_checkercont2 (ans, 3, 1);
+		else if (ft_strncmp(ans[0], "--adaptive", 11) == 0)
+			error_checkercont2 (ans, 0, 1);
+		else
 		{
-			error_checkerfreer(ans, NULL);
+			write(2, "Error\n", 6);
+			freesplit(ans);
 			return ;
 		}
-		k++;
+		return ;
 	}
-	if (ans[k] == NULL)
-		freesplit(ans);
-	else
-		error_checkercont2(ans, mode, k, bench);
+	error_checkercont2 (ans, 0, 0);
 }
 
 void	helper_error_checker(char *strjoin)
