@@ -6,7 +6,7 @@
 /*   By: wli-ting <wli-ting@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/13 14:37:17 by wli-ting          #+#    #+#             */
-/*   Updated: 2026/11/02 21:55:14 by wli-ting         ###   ########.fr       */
+/*   Updated: 2026/11/07 19:07:50 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_node	*helper_nodecreator(char **ans, int start_index)
 	k = start_index;
 	while (ans[k] != NULL)
 	{
-		if (num_checker(ans[k]) == 1) //checks for numbers only
+		if (num_checker(ans[k]) == 1)
 		{
 			error_checkerfreer(ans, stack_a);
 			exit (0);

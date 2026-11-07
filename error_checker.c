@@ -6,9 +6,11 @@
 /*   By: wli-ting <wli-ting@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/13 14:37:35 by wli-ting          #+#    #+#             */
-/*   Updated: 2026/10/13 14:37:35 by wli-ting         ###   ########.fr       */
+/*   Updated: 2026/11/07 19:21:56 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "push_swap.h"
 
 #include "push_swap.h"
 
@@ -22,7 +24,6 @@ void	error_checkerfreer(char **ans, t_node *stack_a)
 	return ;
 }
 
-
 void	error_checkercont2(char **ans, int mode, int k, t_bench *bench)
 {
 	float	j;
@@ -35,7 +36,6 @@ void	error_checkercont2(char **ans, int mode, int k, t_bench *bench)
 		error_checkerfreer (ans, stack_a);
 		return ;
 	}
-	//check for repeating numbers
 	if (is_sorted(stack_a) == 0)
 	{
 		freesplit(ans);
@@ -43,19 +43,10 @@ void	error_checkercont2(char **ans, int mode, int k, t_bench *bench)
 		print_bench(bench);
 		exit (0);
 	}
-	//checks if the inputs are already sorted.
-	//here u can then pass to the algo part.
 	j = disorder_calculator(stack_a);
 	bench->disorder = j;
 	index_creator(&stack_a, j, mode, bench);
 	print_bench(bench);
-	//printf("%f\n", j);
-	/*current = stack_a;
-	while (current != NULL)
-	{
-		printf("%d\n", current->value);
-		current = current->next;
-	}*/
 	freesplit(ans);
 	freestack(&stack_a);
 	return ;

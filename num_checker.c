@@ -6,30 +6,11 @@
 /*   By: wli-ting <wli-ting@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/13 14:37:39 by wli-ting          #+#    #+#             */
-/*   Updated: 2026/10/13 14:37:39 by wli-ting         ###   ########.fr       */
+/*   Updated: 2026/11/07 19:09:49 by wli-ting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-//#include <stdio.h>
-
-/*int	num_checker3(t_node **ans)
-{
-	t_node	*ansk;
-	long int	i;
-	long int	j;
-
-	ansk = *ans;
-	i = -2147483649;
-	j = 2147483648;
-	if (ansk->value <= i || ansk->value >= j)
-	{
-		write(2, "Error\n", 6);
-		return (1);
-	}
-	return (0);
-}*/
 
 int	num_checker2(t_node **ans)
 {
@@ -46,8 +27,6 @@ int	num_checker2(t_node **ans)
 		{
 			if (lst->value == lst2->value)
 				return (1);
-			/*else if (num_checker3(ans) == 1)
-				return (1);*/
 			lst2 = lst2->next;
 		}
 		lst = lst->next;
