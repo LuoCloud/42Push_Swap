@@ -196,7 +196,7 @@ Operation counts on random inputs (distinct values):
 | 500 | `--simple` | 31630 | 33768 | 32699 | 30 |
 | 500 | `--medium` | 8767 | 8996 | 8881 | 30 |
 | 500 | `--complex` | 6784 | 6784 | 6784 | 30 |
-| 500 | `--adaptive` | <min> | <max> | <avg> | <amount> |
+| 500 | `--adaptive` | 6784 | 9031 | 7908 | 30 |
 
 Subject targets: 100 numbers: `< 2000` pass, `< 1500` good, `< 700` excellent.
 500 numbers: `< 12000` pass, `< 8000` good, `< 5500` excellent.
