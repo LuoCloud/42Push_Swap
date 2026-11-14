@@ -21,6 +21,7 @@ SRCS = ft_split.c \
 	r_rotate_op.c \
 	rotate_op.c \
 	swap_op.c \
+	bench_utils.c \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -32,7 +33,7 @@ all: $(LIBFT) $(NAME)
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
-# This rule takes your compiled objects and the libft.a, and links them into an executable
+# This rule takes compiled objects and the libft.a, and links them into an executable
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
