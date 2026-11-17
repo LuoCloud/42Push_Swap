@@ -1,26 +1,27 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: cchien-s <cchien-s@student.42kl.edu.my>    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/09/11 00:20:12 by cchien-s          #+#    #+#              #
-#    Updated: 2026/09/22 01:35:08 by cchien-s         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-NAME = pushswap
+NAME = push_swap
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = ft_atoi.c \
-	ft_split.c \
+SRCS = ft_split.c \
 	ft_strjoin.c \
 	ft_strlen.c \
 	ft_strdup.c\
 	ft_calloc.c\
 	push_swap.c \
+	algo_small.c\
+	algo_simple.c \
+	algo_medium.c \
+	algo_utils.c \
+	algo_utils2.c \
+	algo_utils3.c \
+	algo_complex.c \
+	error_checker.c \
+	num_checker.c \
+	push_op.c \
+	r_rotate_op.c \
+	rotate_op.c \
+	swap_op.c \
+	bench_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -30,10 +31,10 @@ LIBFT = ./libft/libft.a
 all: $(LIBFT) $(NAME)
 
 $(LIBFT):
-	make -C $(LIBFT_DIR)
+	$(MAKE) -C $(LIBFT_DIR)
 
-# This rule takes your compiled objects and the libft.a, and links them into an executable
-$(NAME): $(OBJS)
+# This rule takes compiled objects and the libft.a, and links them into an executable
+$(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
 clean:
@@ -42,7 +43,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	make clean -C $(LIBFT_DIR)
+	make fclean -C $(LIBFT_DIR)
 
 re: fclean all
 
